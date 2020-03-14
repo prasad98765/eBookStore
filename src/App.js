@@ -1,17 +1,26 @@
-import React, { Component } from 'react';
-import TextField from '../src/component/textField/textfield';
-import './App.css'
+import React from 'react';
+import './component/dashboard/dashboard.css';
+import Card from './component/dashboard/dashboard'
 
-class App extends Component {
-  render() {
-    return (
-      <div basename="/react-auth-ui/">
-          <div className="App__Form">
-             <TextField/>
-          </div>
-      </div>
-    );
-  }
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+       <div className="cardList">
+       <Card ></Card>
+       <Card></Card>
+       <Card></Card>
+       <Card></Card>
+       <Card></Card>
+       <Card></Card>
+       <Card></Card>
+       <Card></Card>
+       <Card></Card>
+       <Card></Card>
+       </div>
+      </header>
+    </div>
+  );
 }
 
 export default App;
