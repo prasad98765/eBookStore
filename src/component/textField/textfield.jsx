@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import '../textField/textField.css'
-var APIcall = require("../../BookStoreCallAPI");
-
+var APIcall = require('../../congfiguration/BookStoreCallAPI');
+var Dashboard = require('../dashboard/dashboard')
 class SignUpForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       TITLE: "",
       AUTHOR: "",
@@ -12,8 +12,9 @@ class SignUpForm extends Component {
       RATING: "",
       PRICE: 89,
       DESCRIPTION: "",
-      FILE: "",
-      IMAGEPATH: ""
+      FILE: null,
+      IMAGEPATH: "",
+      COUNT : 0
     };
   }
 
@@ -39,15 +40,15 @@ class SignUpForm extends Component {
   getfile = async event => {
     console.log("select--> ", event.target.files[0]);
     this.setState({ FILE: event.target.files[0] });
-    const filePath = {
-      FILE_PATH: await this.state.FILE
-    };
     event.preventDefault();
     const formData = new FormData();
     formData.append("filePath", this.state.FILE);
+    console.log("formData",formData);
+    
     APIcall.getImagePath(formData).then(res => {
       console.log("res in file upload--> ", res.data);
       this.setState({ IMAGEPATH: res.data });
+
     });
   };
   getfilepath = () => {
@@ -66,18 +67,27 @@ class SignUpForm extends Component {
       IMAGEPATH: this.state.IMAGEPATH
     };
 
-    console.log(bookDetails);
+    console.log("book details object",bookDetails);
 
-    APIcall.getBookDetails(bookDetails)
-      .then(res => {
-        console.log(res.data);
+    APIcall.BookDetails(bookDetails)
+      .then(res => {     
+          console.log("save book in data base ---------------->",res.data);
+                 
       })
       .catch(err => {
         console.log("err while submitting--> ", err);
       });
   };
+   getCountIncrement = () => {
+    this.setState({
+      COUNT: this.state.COUNT + 1
+    });
+    
+  }
+
 
   render() {
+    console.log("==>",this.state.GIVEN_TITLE);
     return (
       <div className="FormCenter">
         <form className="FormFields">
@@ -162,7 +172,6 @@ class SignUpForm extends Component {
             />
           </div>
         </form>
-
         <div className="FormField">
           <button
             type="submit"

@@ -1,17 +1,4 @@
-.App {
-  height: 100vh;
-  color: white;
+.dropdown{
+  margin-left:80%;
+  margin-top: 5%;
 }
-
-.App__Aside {
-  width: 50%;
-
-}
-
-.App__Form {
-  display: flex;
-   background-color: #2E4158;
-  padding: 12% 15%;
-  overflow: auto;
-}
-
