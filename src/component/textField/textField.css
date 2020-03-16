@@ -1,10 +1,25 @@
-  .FormCenter {
-      margin-top: -15%;
+.fullBG{
+  background-color: #2E4158;
+  margin-top: 0%;
+  margin-bottom: 0%;
+}
+
+.FormCenter {
+      margin-top: -1%;
+      background-color: #2E4158;
+  }
+
+  .FormFields {
+    margin-top: 3%;
+    margin-left: 20%;
+
   }
   
   .FormField {
-    margin-bottom: 4%;
-    margin-top: 10%;
+    margin-bottom: 6%;
+    margin-top: -3%;
+    margin-left: 20%;
+    margin-right: 60%;
   }
   
   .FormField__Label {
@@ -17,7 +32,7 @@
     width: 150%;
     background-color: transparent;
     border: none;
-    color: white;
+    color: black;
     outline: none;
     border-bottom: 1px solid #445366;
     font-size: 1em;
@@ -27,6 +42,7 @@
   }
   
   .FormField__Input::placeholder {
+    font-family: "New Times Roman";
     color: #616E7F;
   }
   
@@ -36,8 +52,9 @@
     border:  none;
     width: 50%;
     margin-left: 17%;
+    margin-top: -2%;
     outline: none;
-    border-radius: 12.5%;
+    border-radius: 20.5%;
     padding: 5% 15%;
     font-size: .8em;
     font-weight: 500;
@@ -69,3 +86,4 @@
     padding-bottom: 1%;
     margin-left:2.5%;
   }
+

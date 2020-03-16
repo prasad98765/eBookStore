@@ -1,17 +1,15 @@
-import React, { Component } from 'react';
-import TextField from '../src/component/textField/textfield';
-import './App.css'
 
-class App extends Component {
+import React, { Component } from 'react'
+import TestField from '../src/component/textField/textfield.jsx'
+export class App extends Component {
   render() {
     return (
-      <div basename="/react-auth-ui/">
-          <div className="App__Form">
-             <TextField/>
-          </div>
-      </div>
-    );
+        <div>
+       <TestField/>
+       </div>
+    )
   }
 }
 
-export default App;
+export default App
+
