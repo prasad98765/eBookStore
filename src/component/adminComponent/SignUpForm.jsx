@@ -40,19 +40,19 @@ class SignUpForm extends Component {
             <form onSubmit={this.handleSubmit} className="FormFields">
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="name">Full Name</label>
-                <input type="text" id="name" className="FormField__Input" placeholder="Enter your full name" name="name" value={this.state.NAME} onChange={this.handleChange} />
+                <input type='text' id="name" className="FormField__Input" placeholder="Enter your full name" name="NAME" value={this.state.NAME} onChange={this.handleChange} />
               </div>
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="password">Password</label>
-                <input type="password" id="password" className="FormField__Input" placeholder="Enter your password" name="password" value={this.state.PASSWORD} onChange={this.handleChange} />
+                <input type="text" id="password" className="FormField__Input" placeholder="Enter your password" name="PASSWORD" value={this.state.PASSWORD} onChange={this.handleChange} />
               </div>
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="email">E-Mail Address</label>
-                <input type="email" id="email" className="FormField__Input" placeholder="Enter your email" name="email" value={this.state.EMAIL} onChange={this.handleChange} />
+                <input type="text" id="email" className="FormField__Input" placeholder="Enter your email" name="EMAIL" value={this.state.EMAIL} onChange={this.handleChange} />
               </div>
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="phone_number">Phone Number</label>
-                <input type="phone_number" id="phome_number" className="FormField__Input" placeholder="Enter phone number" name="phone_number" value={this.state.CONTACT} onChange={this.handleChange} />
+                <input type="text" id="phome_number" className="FormField__Input" placeholder="Enter phone number" name="CONTACT" value={this.state.CONTACT} onChange={this.handleChange} />
               </div>
               <div className="FormField">
                 <label className="FormField__CheckboxLabel">
