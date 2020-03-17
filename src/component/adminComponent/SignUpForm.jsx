@@ -128,9 +128,9 @@ class SignUpForm extends Component {
               value={this.state.NAME}
               onChange={this.handleChange}
             />
-            {formErrors.NAME.length > 0 && (
-              <span className="errorMessage">{formErrors.NAME}</span>
-            )}
+            <div className="errorMessage">
+              {formErrors.NAME.length > 0 && <span>{formErrors.NAME}</span>}
+            </div>
           </div>
 
           <div className="FormField">
@@ -153,15 +153,15 @@ class SignUpForm extends Component {
               className={formErrors.EMAIL.length > 0 ? "error" : null}
               type="text"
               id="email"
-              className="FormField__Input"
+              // className="FormField__Input"
               placeholder="Enter your email"
               name="EMAIL"
               value={this.state.EMAIL}
               onChange={this.handleChange}
             />
-            {formErrors.EMAIL.length > 0 && (
-              <span className="errorMessage">{formErrors.EMAIL}</span>
-            )}
+            <div className="errorMessage">
+              {formErrors.EMAIL.length > 0 && <span>{formErrors.EMAIL}</span>}
+            </div>
           </div>
 
           <div className="FormField">
@@ -182,17 +182,19 @@ class SignUpForm extends Component {
                 marginTop: "10px"
               }}
               className={formErrors.PASSWORD.length > 0 ? "error" : null}
-              type="text"
-              className="FormField__Input"
+              type="password"
+              // className="FormField__Input"
               placeholder="Enter your password"
               name="PASSWORD"
               value={this.state.PASSWORD}
               onChange={this.handleChange}
               onInput={this.validate}
             />
-            {formErrors.PASSWORD.length > 0 && (
-              <span className="errorMessage">{formErrors.PASSWORD}</span>
-            )}
+            <div className="errorMessage">
+              {formErrors.PASSWORD.length > 0 && (
+                <span>{formErrors.PASSWORD}</span>
+              )}
+            </div>
           </div>
 
           <div className="FormField">
@@ -212,18 +214,20 @@ class SignUpForm extends Component {
                 paddingBottom: "10px",
                 marginTop: "10px"
               }}
-              className={formErrors.PASSWORD.length > 0 ? "error" : null}
+              className={formErrors.CONTACT.length > 0 ? "error" : null}
               type="text"
               id="phome_number"
-              className="FormField__Input"
+              // className="FormField__Input"
               placeholder="Enter phone number"
               name="CONTACT"
               value={this.state.CONTACT}
               onChange={this.handleChange}
             />
-            {formErrors.CONTACT.length > 0 && (
-              <span className="errorMessage">{formErrors.CONTACT}</span>
-            )}
+            <div className="errorMessage">
+              {formErrors.CONTACT.length > 0 && (
+                <span>{formErrors.CONTACT}</span>
+              )}
+            </div>
           </div>
 
           <div className="FormField">
