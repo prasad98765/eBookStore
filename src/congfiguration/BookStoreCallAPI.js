@@ -16,7 +16,7 @@ export function getAllBooks() {
   });
 }
 export function getImagePath(data) {
-  console.log("In Call API", data);
+  console.log("In Call image Path API", data);
 
   return axios({
     method: "POST",
@@ -25,13 +25,13 @@ export function getImagePath(data) {
   });
 }
 
-export async function searchBook(data) {
-  console.log(data);
+export function searchBook(data) {
+  console.log("in searchBook Call API",data);
 
   return axios({
-    method: "GET",
+    method: "POST",
     url: "http://localhost:3000/searchBook",
-    bosy: await data
+    data: data
   });
 }
 
@@ -61,3 +61,5 @@ export function getSortByArrival() {
     url: "http://localhost:3000/sortBooksByArrival"
   });
 }
+
+
