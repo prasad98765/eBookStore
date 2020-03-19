@@ -1,9 +1,13 @@
 import React, { Component } from "react";
-import Dashboard from "/home/admin1/Desktop/addBook/eBookStoreUi/src/component/dashboard/dashboard.jsx";
-import TopBar from "/home/admin1/Desktop/addBook/eBookStoreUi/src/component/topbar/navbar.js";
+// import Dashboard from "/home/admin1/Desktop/addBookeBookStoreUi/src/component/dashboard/dashboard.jsx";
+// import TopBar from "/home/admin1/Desktop/addBook/eBookStoreUi/src/component/topbar/navbar.js";
+import TopBar  from '../topbar/navbar'
 import Sorting from "../dropDownSorting/dropdown";
-// var Dashboard = require('../../component/dashboard/dashboard')
-var Sortingdropdown = require("../../component/dropDownSorting/dropdown");
+// var Dashboard = require('../dashboard/dashboard')
+import Dashboard from '/home/admin1/Desktop/gitCloneData/eBookStoreUi/src/component/dashboard/dashboard'
+// var Sortingdropdown = require("../../component/dropDownSorting/dropdown");
+import Footer from '../footer/footer'
+import Pagination from '../pagination/pagination'
 var APIcall = require("../../congfiguration/BookStoreCallAPI");
 
 class dashboard extends Component {
@@ -61,6 +65,8 @@ class dashboard extends Component {
           </div>
 
         </div>
+        <Pagination/>
+        <Footer/>
       </div>
     );
   }

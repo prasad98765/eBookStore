@@ -5,7 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 var APIcall = require("../../congfiguration/BookStoreCallAPI");
 // var ListofBooks = require('../../component/dashboard/listOfBooks')
-var ListofBooks = require("../../component/dashboard/listOfBooks");
+// var ListofBooks = require("../../component/dashboard/listOfBooks");
 
 
 export default class MenuPopupState extends Component {
@@ -55,7 +55,7 @@ export default class MenuPopupState extends Component {
                 {...bindTrigger(popupState)}
                 style={{
                   fontFamily: "Times New Roman",
-                  fontSize: 10,
+                  fontSize: 9,
                   borderStyle: "ridge",
                   borderWidth: "thin",
                   borderColor: "grey"

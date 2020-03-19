@@ -1,15 +1,38 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 var APIcall = require("../../congfiguration/BookStoreCallAPI");
+const emailRegex = RegExp(
+  "^[a-zA-Z0-9]([._+-]{0,1}[a-zA-Z0-9])*[@]{1}[a-zA-Z0-9]{1,}[.]{1}[a-zA-Z]{2,3}([.]{1}[a-zA-Z]{2,3}){0,1}$"
+);
+const formValid = ({ formErrors, ...rest }) => {
+  let valid = true;
+  // validate form errors being empty
+  Object.values(formErrors).forEach(val => {
+    val.length > 0 && (valid = false);
+  });
 
+  // validate the form was filled out
+  Object.values(rest).forEach(val => {
+    val === null && (valid = false);
+  });
+  return valid;
+};
 
 class SignInForm extends Component {
   constructor() {
     super();
 
+    // this.state = {
+    //   EMAIL: '',
+    //   PASSWORD: ''
+    // };
     this.state = {
-      EMAIL: '',
-      PASSWORD: ''
+      EMAIL: null,
+      PASSWORD: null,
+      formErrors: {
+        EMAIL: "",
+        PASSWORD: ""
+      }
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -17,25 +40,55 @@ class SignInForm extends Component {
   }
 
   handleChange(e) {
+    //   let target = e.target;
+    //   let value = target.type === "checkbox" ? target.checked : target.value;
+    //   let name = target.name;
+
+    //   this.setState({
+    //     [name]: value
+    //   });
+    // }
+    e.preventDefault();
     let target = e.target;
     let value = target.type === "checkbox" ? target.checked : target.value;
-    let name = target.name;
+    // let name = target.name;
+    const { name } = e.target;
+    let formErrors = { ...this.state.formErrors };
 
-    this.setState({
-      [name]: value
-    });
+    switch (name) {
+      case "EMAIL":
+        formErrors.EMAIL = emailRegex.test(value)
+          ? ""
+          : "invalid email address";
+        break;
+      case "PASSWORD":
+        formErrors.PASSWORD =
+          value.length < 8 ? "minimum 8 characaters required" : "";
+        break;
+      default:
+        break;
+    }
+    this.setState({ formErrors, [name]: value }, () => console.log(this.state));
   }
 
-   handleSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault();
-     var adminData = {
-      "EMAIL":  this.state.EMAIL,
-      "PASSWORD": this.state.PASSWORD       
+    if (formValid(this.state)) {
+      console.log(`
+        --SUBMITTING--
+        Email: ${this.state.EMAIL}
+        Password: ${this.state.PASSWORD}
+      `);
+    } else {
+      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
     }
-    APIcall.getLogin(adminData)
-    .then(res =>{
-      console.log('responce comming from  getLogin',res);
-    })
+    var adminData = {
+      EMAIL: this.state.EMAIL,
+      PASSWORD: this.state.PASSWORD
+    };
+    APIcall.getLogin(adminData).then(res => {
+      console.log("responce comming from  getLogin", res);
+    });
 
     // console.log("The form was submitted with the following data:");
     // console.log(this.state);
@@ -43,10 +96,10 @@ class SignInForm extends Component {
 
   // login(){
   //   console.log('gone to login');
-    
+
   //   // var data = {
   //   //   EMAIL: this.state.EMAIL,
-  //   //   PASSWORD: this.state.PASSWORD       
+  //   //   PASSWORD: this.state.PASSWORD
   //   // }
   //   // APIcall.getLogin(data)
   //   // .then(res =>{
@@ -56,7 +109,7 @@ class SignInForm extends Component {
 
   render() {
     console.log(this.state.EMAIL);
-    
+    const { formErrors } = this.state;
     return (
       <div className="FormCenter">
         <form
@@ -69,14 +122,31 @@ class SignInForm extends Component {
               E-Mail Address
             </label>
             <input
-              type="text"
-               id="email" 
-              className="FormField__Input"
+             style={{
+              width: "40%",
+              backgroundColor: "transparent",
+              border: "none",
+              color: "white",
+              outline: "none",
+              borderBottom: "1px solid #445366",
+              fontSize: "1em",
+              fontWeight: "300",
+              paddingBottom: "10px",
+              marginTop: "10px"
+            }}
+            className={formErrors.EMAIL.length > 0 ? "error" : null}
+             type="text"
+              // id="email"
+              // className="FormField__Input"
               placeholder="Enter your email"
-               name="EMAIL"
+              name="EMAIL"
               value={this.state.EMAIL}
               onChange={this.handleChange}
             />
+             <div className="errorMessage">
+            {formErrors.EMAIL.length > 0 && (
+              <span >{formErrors.EMAIL}</span>
+            )}</div>
           </div>
 
           <div className="FormField">
@@ -84,14 +154,30 @@ class SignInForm extends Component {
               Password
             </label>
             <input
-              type="text"
-              id="password"
-              className="FormField__Input"
+              style={{
+                width: "40%",
+                backgroundColor: "transparent",
+                border: "none",
+                color: "white",
+                outline: "none",
+                borderBottom: "1px solid #445366",
+                fontSize: "1em",
+                fontWeight: "300",
+                paddingBottom: "10px",
+                marginTop: "10px"
+              }}
+              className={formErrors.PASSWORD.length > 0 ? "error" : null}
+              type="password"
+              // className="FormField__Input"
               placeholder="Enter your password"
               name="PASSWORD"
               value={this.state.PASSWORD}
               onChange={this.handleChange}
             />
+             <div className="errorMessage">
+            {formErrors.PASSWORD.length > 0 && (
+              <span >{formErrors.PASSWORD}</span>
+            )}</div>
           </div>
 
           <div className="FormField">

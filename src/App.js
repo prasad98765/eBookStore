@@ -3,11 +3,10 @@ import React, { Component } from "react";
 // import TopBar from './component/topbar/navbar'
 // import Dashboard from "./component/dashboard/dashboard";
 
-import ListOfBook from "./component/dashboard/listOfBooks";
+// import ListOfBook from "./component/dashboard/listOfBooks";
 
 import Routes from "../src/component/routes"
-
-
+// import Admin from './component/adminLogin/singUpAndSign'
 import "./App.css";
 
 class App extends Component {
@@ -17,7 +16,8 @@ class App extends Component {
         <div>
           {/* <ListOfBook /> */}
           <Routes></Routes>
-        </div>
+          {/* <Admin/> */}
+          </div>
        
       </div>
     );

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { HashRouter as Router, Route, NavLink } from 'react-router-dom';
-import SignUpForm from '../adminComponent/SignUpForm';
-import SignInForm from '../adminComponent/SignInForm';
+import SignUpForm from './SignUpForm';
+import SignInForm from './SignInForm';
 
-import '../adminComponent/signInAndSignUp.css'
+import './signInAndSignUp.css'
 
 class SignUpAndSignIn extends Component {
   render() {
@@ -30,7 +30,7 @@ class SignUpAndSignIn extends Component {
         </div>
       </Router>
     );
-  }
+  } 
 }
 
 export default SignUpAndSignIn;

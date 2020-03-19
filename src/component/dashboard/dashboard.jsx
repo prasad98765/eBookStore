@@ -7,12 +7,11 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
-import logo from '../../logo.svg';
 
-// import { Image } from 'react-native'
 // import image from "/home/admin1/Desktop/addBook/eBookStoreUi/src/component/topbar/img_girl.jpg"
+
 var APIcall = require("../../congfiguration/BookStoreCallAPI");
-var ListBook = require("/home/admin1/Desktop/addBook/eBookStoreUi/src/component/dashboard/listOfBooks.jsx");
+var ListBook = require('../dashboard/listOfBooks');
 class dashboard extends Component {
   constructor(props) {
     super(props);
