@@ -2,11 +2,13 @@
   background-color: #2E4158;
   margin-top: 0%;
   margin-bottom: 0%;
+  
 }
 
 .FormCenter {
       margin-top: -1%;
       background-color: #2E4158;
+      height: 1000px;
   }
 
   .FormFields {

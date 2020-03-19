@@ -14,7 +14,7 @@ export function getImagePath(data) {
   
   return axios({
     method : 'POST',
-    url: "http://localhost:3000/FilePath",
+    url: "http://localhost:3000/upload",
     data: data
   })
 }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../textField/textField.css";
-// var APIcall = require('../../congfiguration/BookStoreCallAPI');
+var APIcall = require("../../BookStoreCallAPI");
 // var Dashboard = require('../dashboard/dashboard')
 class SignUpForm extends Component {
   constructor(props) {
@@ -20,8 +20,7 @@ class SignUpForm extends Component {
       // GIVEN_PRICE:"",
       // GIVEN_DESCRIPTION:"",
       // GIVEN_IMAGEPATH:"",
-      COUNT: 0,
-      show: true
+      COUNT: 0
     };
   }
 
@@ -50,35 +49,33 @@ class SignUpForm extends Component {
     // const filePath = {
     //   FILE_PATH: await this.state.FILE
     // };
-    event.preventDefault();
+
     const formData = new FormData();
-    formData.append("filePath", this.state.FILE);
+    formData.append("filePath", event.target.files[0]);
     console.log("formData", formData);
+    
 
-    // APIcall.getImagePath(formData).then(res => {
-    //   console.log("res in file upload--> ", res.data);
-    //   this.setState({ IMAGEPATH: res.data });
-
-    // });
+    APIcall.getImagePath(formData).then(res => {
+      console.log("res in file upload--> ", res.data.url);
+      this.setState({ IMAGEPATH: res.data.url });
+    });
   };
   getfilepath = () => {
     console.log("in file Path", this.state.FILE);
   };
-  increment=async()=> {
-    await this.setState(
-      previousState=>{
-        this.setState({COUNT: previousState.COUNT +1})
-      })    
-  }
+  increment = async () => {
+    await this.setState(previousState => {
+      this.setState({ COUNT: previousState.COUNT + 1 });
+    });
+  };
 
-  decrement=async()=> {
-    if(this.state.COUNT>0){
-     this.setState(
-      previousState=>{
-        this.setState({COUNT: previousState.COUNT -1})
-      })    
+  decrement = async () => {
+    if (this.state.COUNT > 0) {
+      this.setState(previousState => {
+        this.setState({ COUNT: previousState.COUNT - 1 });
+      });
     }
-  }
+  };
 
   getbookdetails = () => {
     console.log("call to submit");
@@ -90,19 +87,19 @@ class SignUpForm extends Component {
       RATING: this.state.RATING,
       PRICE: this.state.PRICE,
       DESCRIPTION: this.state.DESCRIPTION,
-      IMAGEPATH: this.state.IMAGEPATH
+      IMAGEPATH: this.state.IMAGEPATH,
+      NOOFBOOKS: this.state.COUNT
     };
 
     console.log("book details object", bookDetails);
 
-    // APIcall.BookDetails(bookDetails)
-    //   .then(res => {
-    //       console.log("save book in data base ---------------->",res.data);
-
-    //   })
-    //   .catch(err => {
-    //     console.log("err while submitting--> ", err);
-    //   });
+    APIcall.getBookDetails(bookDetails)
+      .then(res => {
+        console.log("save book in data base ---------------->", res.data);
+      })
+      .catch(err => {
+        console.log("err while submitting--> ", err);
+      });
   };
   getCountIncrement = () => {
     this.setState({
@@ -112,7 +109,9 @@ class SignUpForm extends Component {
 
   render() {
     console.log(this.state.COUNT);
-    
+    console.log("file state-> ", this.state.FILE);
+    console.log("image response to state--> ", this.state.IMAGEPATH);
+
     console.log("==>", this.state.GIVEN_TITLE);
     return (
       <div className="fullBG">
@@ -197,27 +196,41 @@ class SignUpForm extends Component {
                 name="descrition"
               />
             </div>
-            </form>
-            <div className="FormField">
-              <div style={{ fontSize: 10, color: "white",marginTop:-50}}>
-              {" "}
-                Number Of Books
-              </div>
-              <div style={{marginTop:10}}>
-              <button style={{fontSize:"medium"}} onClick={this.decrement}>-</button>
-              <button style={{fontSize:"medium"}}>{this.state.COUNT}</button>
-              <button style={{fontSize:"medium"}} onClick={this.increment}>+</button>
-              </div>
-            </div>
-
             <div className="FormField">
               <input
                 accept="image/*"
                 type="file"
+                name="filePath"
                 value={this.state.value}
                 onChange={this.getfile}
               />
             </div>
+          </form>
+          {/* <form
+            action="http://localhost:3000/FilePath"
+            enctype="multipart/form-data"
+            method="POST"
+          >
+            <input type="file" name="filePath" accept="image/*" />
+            <input type="submit" value="Upload an Image" />
+          </form> */}
+
+          <div className="FormField">
+            <div style={{ fontSize: 10, color: "white", marginTop: -50 }}>
+              {" "}
+              Number Of Books
+            </div>
+            <div style={{ marginTop: 10 }}>
+              <button style={{ fontSize: "medium" }} onClick={this.decrement}>
+                -
+              </button>
+              <button style={{ fontSize: "medium" }}>{this.state.COUNT}</button>
+              <button style={{ fontSize: "medium" }} onClick={this.increment}>
+                +
+              </button>
+            </div>
+          </div>
+
           <div className="FormField">
             <button
               type="submit"
@@ -229,11 +242,9 @@ class SignUpForm extends Component {
             {/* <Dashboard count = {this.state.COUNT}/> */}
           </div>
         </div>
-        <br></br>
       </div>
     );
   }
 }
 
 export default SignUpForm;
-
