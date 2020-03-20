@@ -3,8 +3,6 @@ import React, { Component } from "react";
 // import TopBar from './component/topbar/navbar'
 // import Dashboard from "./component/dashboard/dashboard";
 
-import ListOfBook from "./component/dashboard/listOfBooks";
-
 import Routes from "../src/component/routes"
 
 

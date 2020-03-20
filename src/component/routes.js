@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Link, BrowserRouter as Router } from "react-router-dom";
-import Login from "../component/adminLogin/SignInForm";
+// import Login from "../component/adminLogin/SignInForm";
 import ListOfBook from "../component/dashboard/listOfBooks";
 
 export default function abc() {
@@ -8,8 +8,9 @@ export default function abc() {
     <Router>
       <div>
       <Route path="/" component={ListOfBook} />
-      <Route path="/adminlogin" component={Login} />
+      {/* <Route path="/adminlogin" component={Login} /> */}
       </div>
     </Router>
   );
 }
+

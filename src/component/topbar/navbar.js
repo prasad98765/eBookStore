@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -16,7 +16,7 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import FavoriteRoundedIcon from "@material-ui/icons/FavoriteRounded";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
-import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+
 // var TextField = require('../../component/textField/textfield');
 // import Popover from "@material-ui/core/Popover";
 // import LoginForm from "../login/login";
@@ -90,11 +90,6 @@ const styles = theme => ({
 });
 
 class PrimarySearchAppBar extends React.Component {
-  // state = {
-  //   anchorEl: null,
-  //   mobileMoreAnchorEl: null
-  // };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -107,11 +102,6 @@ class PrimarySearchAppBar extends React.Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  // handleMenuClose = () => {
-  //   this.setState({ anchorEl: null });
-  //   this.handleMobileMenuClose();
-  // };
-
   handleMobileMenuOpen = event => {
     this.setState({ mobileMoreAnchorEl: event.currentTarget });
   };
@@ -120,9 +110,6 @@ class PrimarySearchAppBar extends React.Component {
     this.setState({ mobileMoreAnchorEl: 3 });
   };
   SearchBook = async event => {
-    // let bookSearchDetail = event.target.value;
-    console.log(event.target.value);
-
     await this.setState({
       bookSearch: event.target.value
     });
@@ -130,22 +117,13 @@ class PrimarySearchAppBar extends React.Component {
     const searchObj = {
       TITLE: this.state.bookSearch
     };
-    console.log("After serching --->", searchObj.TITLE);
 
     APIcall.searchBook(searchObj).then(res => {
-      console.log("after serch response--> ", res.data.data);
-      this.props.value(res.data.data)
-      // this.setState({
-      //   searchedBookList: res.data.data
-      // })
-
-      //console.log("search response--->", this.state.searchedBookList)
+      this.props.value(res.data.data);
     });
   };
 
   render() {
-    console.log(this.state.bookSearch);
-    
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
@@ -155,12 +133,12 @@ class PrimarySearchAppBar extends React.Component {
       <Menu
         anchorEl={anchorEl}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
         <MenuItem onClick={this.handleMenuClose}>
-         <a hrerf='/TextField'> Login</a>
+          <a hrerf="/TextField"> Login</a>
         </MenuItem>
         {/* <MenuItem onClick={this.handleMenuClose}>Add Book</MenuItem> */}
       </Menu>
@@ -194,8 +172,11 @@ class PrimarySearchAppBar extends React.Component {
           <IconButton color="inherit">
             <AccountCircle />
           </IconButton>
-          {/* <a href = 'TextField'> Profile</a> */}
-          <p>Profile</p>
+          <a href="TextField" link to="/adminlogin">
+            {" "}
+            Profile
+          </a>
+          {/* <p>Profile</p> */}
         </MenuItem>
       </Menu>
     );
@@ -240,8 +221,7 @@ class PrimarySearchAppBar extends React.Component {
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
-              
-              <AccountCircle/>
+                <AccountCircle />
               </IconButton>
             </div>
             <div className={classes.sectionMobile}>

@@ -26,7 +26,7 @@ export function getImagePath(data) {
 }
 
 export function searchBook(data) {
-  console.log("in searchBook Call API",data);
+  console.log("in searchBook Call API", data);
 
   return axios({
     method: "POST",
@@ -61,5 +61,3 @@ export function getSortByArrival() {
     url: "http://localhost:3000/sortBooksByArrival"
   });
 }
-
-
