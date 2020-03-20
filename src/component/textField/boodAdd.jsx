@@ -1,48 +1,122 @@
 import React, { Component } from "react";
-import "../textField/textField.css";
+import "../../component/textField/bookAdd.css";
 var APIcall = require("../../BookStoreCallAPI");
 // var Dashboard = require('../dashboard/dashboard')
+const ratings =RegExp ('^[0-5]$')
+const titles =RegExp ('^[A-Z]{1}[a-z]{3,}[ ][a-z]{3,}$');
+const author= RegExp('^[A-Z]{1}[a-z]{3,}[ ][a-z]{3,}$');
+const year = RegExp("^[12][0-9]{3}$");
+const price = RegExp("^[0-9]");
+const formValid = ({ formErrors, ...rest }) => {
+  let valid = true;
+  Object.values(formErrors).forEach(val => {
+    val.length > 0 && (valid = false);
+  });
+ Object.values(rest).forEach(val => {
+    val === null && (valid = false);
+  });
+  return valid;
+};
+
 class SignUpForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      TITLE: "",
-      AUTHOR: "",
-      YEAR: "",
-      RATING: "",
-      PRICE: 89,
-      DESCRIPTION: "",
-      FILE: null,
-      IMAGEPATH: "",
-      // GIVEN_TITLE:"cfvgbhnjmkl",
-      // GIVEN_AUTHOR:"",
-      // GIVEN_YEAR:"",
-      // GIVEN_PRICE:"",
-      // GIVEN_DESCRIPTION:"",
-      // GIVEN_IMAGEPATH:"",
-      COUNT: 0
+      TITLE: null,
+      AUTHOR: null,
+      YEAR: null,
+      RATING: null,
+      PRICE: null,
+      DESCRIPTION: null,
+      COUNT: 0,
+      formErrors: {
+        TITLE: "",
+        AUTHOR: "",
+        YEAR: "",
+        RATING: "",
+        PRICE: "",
+        DESCRIPTION: "",
+        FILE: null,
+        IMAGEPATH: "",
+       
+      }
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  gettitle = event => {
-    this.setState({ TITLE: event.target.value });
+  handleChange = e => {
+    e.preventDefault();
+    let value = e.target.value;
+    const { name } = e.target;
+    let formErrors = { ...this.state.formErrors };
+
+    switch (name) {
+      case "TITLE":
+        formErrors.TITLE =
+        formErrors.TITLE=titles.test(value) ? "" : "please enter valid title name"
+        break;
+      case "AUTHOR":
+        formErrors.AUTHOR =
+        formErrors.AUTHOR=author.test(value) ? "" : "please enter valid author name"
+        break;
+      case "YEAR":
+        formErrors.YEAR = year.test(value) ? "" : "Please enter valid year";
+        break;
+
+      case "PRICE":
+        formErrors.PRICE = price.test(value) ? "" : "Please enter valid price";
+        break;
+      case "RATING":
+        formErrors.RATING = 
+        ratings.test(value) ? " " : "please enter rating in range[0-5]";
+        break;
+      default:
+        break;
+    }
+    this.setState({ formErrors, [name]: value }, () => console.log(this.state));
   };
-  getauthor = event => {
-    this.setState({ AUTHOR: event.target.value });
-  };
-  getyear = event => {
-    this.setState({ YEAR: event.target.value });
-  };
-  getrating = event => {
-    this.setState({ RATING: event.target.value });
-  };
-  getprice = event => {
-    this.setState({ PRICE: event.target.value });
-    console.log(this.state.PRICE);
-  };
-  getdescription = event => {
-    this.setState({ DESCRIPTION: event.target.value });
-  };
+
+  handleSubmit(e) {
+    e.preventDefault();
+    if (formValid(this.state)) {
+      console.log(`
+          --SUBMITTING--
+          title Name: ${this.state.TITLE}
+          Email: ${this.state.AUTHOR}
+          Password: ${this.state.YEAR}
+          contact:${this.state.RATING}
+          contact:${this.state.PRICE}
+          contact:${this.state.DESCRIPTION}
+        `);
+    } else {
+      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+    }
+    console.log("The form was submitted with the following data:");
+    console.log(this.state);
+  }
+
+  // gettitle = event => {
+  //   this.setState({ TITLE: event.target.value }, () => {
+  //     this.validateTitle();
+  //   });
+  // };
+  // getauthor = event => {
+  //   this.setState({ AUTHOR: event.target.value });
+  // };
+  // getyear = event => {
+  //   this.setState({ YEAR: event.target.value });
+  // };
+  // getrating = event => {
+  //   this.setState({ RATING: event.target.value });
+  // };
+  // getprice = event => {
+  //   this.setState({ PRICE: event.target.value });
+  //   console.log(this.state.PRICE);
+  // };
+  // getdescription = event => {
+  //   this.setState({ DESCRIPTION: event.target.value });
+  // };
   getfile = async event => {
     console.log("select--> ", event.target.files[0]);
     this.setState({ FILE: event.target.files[0] });
@@ -53,7 +127,6 @@ class SignUpForm extends Component {
     const formData = new FormData();
     formData.append("filePath", event.target.files[0]);
     console.log("formData", formData);
-    
 
     APIcall.getImagePath(formData).then(res => {
       console.log("res in file upload--> ", res.data.url);
@@ -108,16 +181,16 @@ class SignUpForm extends Component {
   };
 
   render() {
+    const { formErrors } = this.state;
     console.log(this.state.COUNT);
     console.log("file state-> ", this.state.FILE);
     console.log("image response to state--> ", this.state.IMAGEPATH);
-
     console.log("==>", this.state.GIVEN_TITLE);
     return (
       <div className="fullBG">
         <br></br>
         <div className="FormCenter">
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <div className="FormFields">
               <h1 style={{ color: "white", fontSize: "large" }}>
                 Book Details
@@ -126,75 +199,103 @@ class SignUpForm extends Component {
             <br></br>
             <br></br>
             <div className="FormField">
-              <label className="FormField__Label">Title</label>
+              <label className="FormField__Label" style={{ marginTop: "30px" }}>
+                Title
+              </label>
               <input
                 value={this.state.value}
-                onChange={this.gettitle}
+                onChange={this.handleChange}
                 type="title"
+                className={formErrors.TITLE.length > 0 ? "error" : null}
                 className="FormField__Input"
                 placeholder="Enter book title name"
-                name="title"
+                name="TITLE"
               />
+              <div className="errorMessage">
+                {formErrors.TITLE.length > 0 && <span>{formErrors.TITLE}</span>}
+              </div>
             </div>
 
             <div className="FormField">
               <label className="FormField__Label">Author</label>
               <input
                 value={this.state.value}
-                onChange={this.getauthor}
+                onChange={this.handleChange}
+                className={formErrors.AUTHOR.length > 0 ? "error" : null}
                 type="Author"
                 className="FormField__Input"
                 placeholder="Enter book author name"
-                name="author"
+                name="AUTHOR"
               />
+              <div className="errorMessage">
+                {formErrors.AUTHOR.length > 0 && (
+                  <span>{formErrors.AUTHOR}</span>
+                )}
+              </div>
             </div>
 
             <div className="FormField">
               <label className="FormField__Label">Year</label>
               <input
                 value={this.state.value}
-                onChange={this.getyear}
+                onChange={this.handleChange}
                 type="Year"
+                className={formErrors.YEAR.length > 0 ? "error" : null}
                 className="FormField__Input"
                 placeholder="Enter book published year"
-                name="year"
+                name="YEAR"
               />
+              <div className="errorMessage">
+                {formErrors.YEAR.length > 0 && <span>{formErrors.YEAR}</span>}
+              </div>
             </div>
 
             <div className="FormField">
               <label className="FormField__Label">Price</label>
               <input
                 value={this.state.value}
-                onChange={this.getprice}
+                onChange={this.handleChange}
+                className={formErrors.PRICE.length > 0 ? "error" : null}
                 type="Price"
                 className="FormField__Input"
                 placeholder="Enter book price"
-                name="price"
+                name="PRICE"
               />
+              <div className="errorMessage">
+                {formErrors.PRICE.length > 0 && <span>{formErrors.PRICE}</span>}
+              </div>
             </div>
 
             <div className="FormField">
               <label className="FormField__Label">Rating</label>
               <input
                 value={this.state.value}
-                onChange={this.getrating}
+                onChange={this.handleChange}
+                className={formErrors.RATING.length > 0 ? "error" : null}
                 type="rating"
                 className="FormField__Input"
                 placeholder="Rating of book"
-                name="rating"
+                name="RATING"
               />
+               <div className="errorMessage">
+                {formErrors.RATING.length > 0 && <span>{formErrors.RATING}</span>}
+              </div>
             </div>
 
             <div className="FormField">
               <label className="FormField__Label">Description</label>
               <input
                 value={this.state.value}
-                onChange={this.getdescription}
+                onChange={this.handleChange}
+                className={formErrors.DESCRIPTION.length > 0 ? "error" : null}
                 type="Description"
                 className="FormField__Input"
                 placeholder="Enter book description"
                 name="descrition"
               />
+                <div className="errorMessage">
+                {formErrors.DESCRIPTION.length > 0 && <span>{formErrors.DESCRIPTION}</span>}
+              </div>
             </div>
             <div className="FormField">
               <input
