@@ -1,5 +1,4 @@
 import React from "react";
-
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -16,11 +15,6 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import FavoriteRoundedIcon from "@material-ui/icons/FavoriteRounded";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
-
-// var TextField = require('../../component/textField/textfield');
-// import Popover from "@material-ui/core/Popover";
-// import LoginForm from "../login/login";
-
 var APIcall = require("../../congfiguration/BookStoreCallAPI");
 
 const styles = theme => ({
@@ -185,7 +179,7 @@ class PrimarySearchAppBar extends React.Component {
         <AppBar position="static" style={{ backgroundColor: "#b71c1c" }}>
           <Toolbar>
             <IconButton className={classes.menuButton} color="inherit">
-              <MenuBookIcon style={{ width: 30 }} />
+              <MenuBookIcon style={{ width: 40 }} />
               Bookstore
             </IconButton>
 

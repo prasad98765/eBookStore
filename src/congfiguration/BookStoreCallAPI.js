@@ -9,10 +9,13 @@ export function BookDetails(data) {
     data: data
   });
 }
-export function getAllBooks() {
+export function getAllBooks(data) {
+  console.log(data);
+  
   return axios({
-    method: "GET",
-    url: "http://localhost:3000/getBooks"
+    method: "POST",
+    url: "http://localhost:3000/getBooks",
+    data : data
   });
 }
 export function getImagePath(data) {
@@ -61,3 +64,12 @@ export function getSortByArrival() {
     url: "http://localhost:3000/sortBooksByArrival"
   });
 }
+
+  export function getNoOFBookCount() {
+    return axios({
+      method: "get",
+      url: "http://localhost:3000/getNoOFBookCount",
+    });
+  }
+  
+
