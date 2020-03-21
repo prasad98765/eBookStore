@@ -7,25 +7,35 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import "../dashboard/dashboard.css";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+
+const styles = theme => ({
+  close: {
+    padding: theme.spacing.unit / 2
+  }
+});
 class dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      button: true
+      open: false
     };
-    this.handleButtonClick = this.handleButtonClick.bind(this);
   }
-  wishListClick(event) {
-    this.setState({ FACKNAM: event.target.value });
-  }
-  handleButtonClick() {
-    this.setState({
-      button: !this.state.button
-    });
-  }
-  AddtoBag() {}
-  AddWishList() {}
+  handleClick = () => {
+    this.setState({ open: true });
+  };
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({ open: false });
+  };
   render() {
+    const { classes } = this.props;
     return (
       <div>
         <Card
@@ -92,25 +102,12 @@ class dashboard extends Component {
               >
                 {this.props.value.PRICE}
               </Typography>
-              {/* <div style = {{
-                display: "flex",
-                flex: "row",
-                justif: "center",
-                width: "100%",
-                color: "white"
-            }}>
-                  {(this.props.value.NOOFCOUNT == 0)
-                  ? <outOfStock></outOfStock>
-                  :<OutOfStck/>
-                  }
-            </div> */}
             </CardContent>
           </CardActionArea>
           <CardActions className="bookdiv">
             <div className="button1" onClick={this.AddtoBag}>
               <Button
-                onClick={this.handleButtonClick}
-                className={this.state.button ? "buttonTrue" : "buttonFalse"}
+                onClick={this.handleClick}
                 style={{
                   border: "none",
                   backgroundColor: "#800000",
@@ -127,9 +124,42 @@ class dashboard extends Component {
               >
                 Add to Bag
               </Button>
+              <Snackbar
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "center"
+                }}
+                open={this.state.open}
+                autoHideDuration={6000}
+                onClose={this.handleClose}
+                ContentProps={{
+                  "aria-describedby": "message-id"
+                }}
+                message={<span id="message-id">Book added successfully</span>}
+                action={[
+                  <Button
+                    key="undo"
+                    color="secondary"
+                    size="small"
+                    onClick={this.handleClose}
+                  >
+                    UNDO
+                  </Button>,
+                  <IconButton
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
+                    className={classes.close}
+                    onClick={this.handleClose}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                ]}
+              />
             </div>
             <div className="button2" onClick={this.AddWishList}>
               <Button
+                onClick={this.handleClick}
                 style={{
                   borderStyle: "solid",
                   borderWidth: "thin",
@@ -141,8 +171,40 @@ class dashboard extends Component {
                   fontSize: "0.60em"
                 }}
               >
-                Wishlist
+                WISHLIST
               </Button>
+              <Snackbar
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "center"
+                }}
+                open={this.state.open}
+                autoHideDuration={6000}
+                onClose={this.handleClose}
+                ContentProps={{
+                  "aria-describedby": "message-id"
+                }}
+                message={<span id="message-id">Book added successfully</span>}
+                action={[
+                  <Button
+                    key="undo"
+                    color="secondary"
+                    size="small"
+                    onClick={this.handleClose}
+                  >
+                    UNDO
+                  </Button>,
+                  <IconButton
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
+                    className={classes.close}
+                    onClick={this.handleClose}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                ]}
+              />
             </div>
           </CardActions>
         </Card>
@@ -150,4 +212,8 @@ class dashboard extends Component {
     );
   }
 }
-export default dashboard;
+dashboard.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(dashboard);

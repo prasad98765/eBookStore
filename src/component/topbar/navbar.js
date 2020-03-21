@@ -1,4 +1,5 @@
 import React from "react";
+import { Route, Link, BrowserRouter as Router } from "react-router-dom";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -16,6 +17,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import FavoriteRoundedIcon from "@material-ui/icons/FavoriteRounded";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 var APIcall = require("../../congfiguration/BookStoreCallAPI");
+
 
 const styles = theme => ({
   root: {
@@ -131,9 +133,9 @@ class PrimarySearchAppBar extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleMenuClose}>
+        {/* <MenuItem onClick={this.handleMenuClose}>
           <a hrerf="/TextField"> Login</a>
-        </MenuItem>
+        </MenuItem> */}
         {/* <MenuItem onClick={this.handleMenuClose}>Add Book</MenuItem> */}
       </Menu>
     );
@@ -215,7 +217,9 @@ class PrimarySearchAppBar extends React.Component {
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
-                <AccountCircle />
+                <AccountCircle>
+                  
+                  </AccountCircle >
               </IconButton>
             </div>
             <div className={classes.sectionMobile}>
