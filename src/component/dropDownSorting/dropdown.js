@@ -3,6 +3,7 @@ import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
+import { colors } from "@material-ui/core";
 var APIcall = require("../../congfiguration/BookStoreCallAPI");
 var ListofBooks = require("../../component/dashboard/listOfBooks");
 
@@ -32,13 +33,19 @@ export default class MenuPopupState extends Component {
 
   render() {
     return (
-      <div className="dropdown">
+      <div className="dropdown" style={{ marginLeft: "77%", marginTop:"2%" }}>
+        <h4 style={{marginLeft:"-275%" ,color:"grey"}}>
+          Books ( {this.props.bookcount} )
+        </h4>
+
         <PopupState variant="popover" popupId="demo-popup-menu">
           {popupState => (
             <React.Fragment>
               <Button
                 {...bindTrigger(popupState)}
                 style={{
+                  marginTop: "-80px",
+                  width: "50%",
                   fontFamily: "Times New Roman",
                   fontSize: 10,
                   borderStyle: "ridge",

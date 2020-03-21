@@ -6,25 +6,37 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
-
+import "../dashboard/dashboard.css";
 class dashboard extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      button: true
+    };
+    this.handleButtonClick = this.handleButtonClick.bind(this);
   }
-
   wishListClick(event) {
     this.setState({ FACKNAM: event.target.value });
   }
-
+  handleButtonClick() {
+    this.setState({
+      button: !this.state.button
+    });
+  }
   AddtoBag() {}
-
   AddWishList() {}
-
   render() {
     return (
       <div>
         <Card
-          style={{ maxWidth: 180, height: 290, marginLeft: 90, marginTop: 50 }}
+          style={{
+            maxWidth: 180,
+            height: 270,
+            marginLeft: 80,
+            marginTop: 20,
+            boxShadow: " 0 4px 8px 0 rgba(0,0,0,0.2)",
+            transition: "0.3s"
+          }}
         >
           <CardActionArea>
             <Tooltip title={this.props.value.DESCRIPTION} arrow>
@@ -86,7 +98,6 @@ class dashboard extends Component {
                 justif: "center",
                 width: "100%",
                 color: "white"
-                
             }}>
                   {(this.props.value.NOOFCOUNT == 0)
                   ? <outOfStock></outOfStock>
@@ -98,9 +109,12 @@ class dashboard extends Component {
           <CardActions className="bookdiv">
             <div className="button1" onClick={this.AddtoBag}>
               <Button
+                onClick={this.handleButtonClick}
+                className={this.state.button ? "buttonTrue" : "buttonFalse"}
                 style={{
                   border: "none",
-                  color: "black",
+                  backgroundColor: "#800000",
+                  color: "white",
                   textDecoration: "none",
                   display: "inlineBlock",
                   transitionDuration: 0.4,
@@ -117,6 +131,8 @@ class dashboard extends Component {
             <div className="button2" onClick={this.AddWishList}>
               <Button
                 style={{
+                  borderStyle: "solid",
+                  borderWidth: "thin",
                   width: 70,
                   height: 30,
                   marginTop: -70,
@@ -134,5 +150,4 @@ class dashboard extends Component {
     );
   }
 }
-
 export default dashboard;

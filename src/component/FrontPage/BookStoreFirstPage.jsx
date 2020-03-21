@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import ListOfBooks from "../dashboard/listOfBooks";
-import TopBar from "/home/admin1/Desktop/addBook/eBookStoreUi/src/component/topbar/navbar.js";
+import TopBar from "../topbar/navbar";
 import Sorting from "../dropDownSorting/dropdown";
+import Dropdown from '../../component/dropDownSorting/dropdown'
 var APIcall = require("../../congfiguration/BookStoreCallAPI");
 class BookStoreFirstPage extends Component {
   constructor(props) {
@@ -48,7 +49,7 @@ class BookStoreFirstPage extends Component {
     return (
       <div>
         <TopBar bookList={this.state.ALLBOOKS} value={this.handleSearch} />
-        <Sorting bookList={this.state.ALLBOOKS} value={this.handleSorting} />
+        <Sorting bookList={this.state.ALLBOOKS} bookcount = {this.state.noOfRecord} value={this.handleSorting} />
         <ListOfBooks
           bookList={this.state.ALLBOOKS}
           handleChange={this.handleChange}

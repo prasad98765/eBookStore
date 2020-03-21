@@ -1,4 +1,4 @@
-/* .App {
+ /* .App {
   text-align: center;
 }
 
@@ -23,9 +23,9 @@ div{
 .bookdiv{
   margin-bottom: -120%;
   margin-left: -107%;
-  width: -300px; */
-  /* background-color: cadetblue; */
-/* }
+  width: -300px; 
+   background-color: cadetblue; 
+ }
 
 .button1{
   background-color:  rgb(131, 12, 26);
@@ -63,11 +63,29 @@ div{
   width: 100;
   margin-Left: 40
   
-} */
-/* 
+} 
+ 
 .imagePath{
   height:"150px"; 
   width:"70%";
   margin-top:"6%";
   margin-left:"15%";
-} */
+}  */
+
+.buttonTrue{
+  width: 70;
+  height: 30;
+  margin-top: -70;
+  font-family: "Times New Roman";
+  color: "black";
+  font-size: "0.60em"
+  }
+  
+  .buttonFalse{
+  width: 90;
+  height: 30;
+  margin-top: -70;
+  font-family: "Times New Roman";
+  color: "black";
+  font-size: "0.60em"
+  }
