@@ -1,0 +1,67 @@
+@media only screen and (min-width:600px){
+    .outerBorder{
+        margin: 4% 7%;
+        /* border: 2px ; */
+        max-width: 1024px;
+        width: 210%;
+        padding: 5%;
+        height:auto;
+    }
+}
+
+@media only screen and (max-width:600px){
+    .outerBorder{
+        margin: auto;
+        /* border: 2px ; */
+        width: 80%;
+    }
+}
+
+.myCartText{
+    padding-left: 8px;
+    font-family: 'Roboto';
+}
+
+.cartDetails{
+    padding-left: 1px;
+    display: flex;
+    flex-direction: row;
+    
+}
+.image{
+    width: 100px;
+    height: auto;
+    /* padding-left: 1px 16px; */
+    padding: 10px;
+}
+.bookname{
+    font-size: 15px;
+    font-weight: bold;
+}
+.authorname{
+    font-size: 13px;
+    color:gray;
+}
+
+.plusImg{
+    width: 20px;
+    margin: 7px;
+}
+.cartinfo{
+    padding: 7px;
+}
+
+.inputCount{
+    height: 10px;
+    width: 30px;
+    padding-top: 15px;
+    text-align: center;
+    padding-bottom: 7px;
+}
+/* .placeorderbutton{
+    width:20%;
+    display: flex-end;
+    margin-left: 80%;
+    background-color: #4CAF50; 
+    
+} */
