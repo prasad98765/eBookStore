@@ -6,26 +6,51 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import "../dashboard/dashboard.css";
 class dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      button: true
+      button: true,
+      title:"",
+      addToCart : [],
+      AddToCardTitle: null,
+      AddToCardAuthor:null,
+      AddToCardImageURL:null,
+      Count:0
+
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
   wishListClick(event) {
-    this.setState({ FACKNAM: event.target.value });
   }
-  handleButtonClick() {
-    this.setState({
-      button: !this.state.button
+  async handleButtonClick (event) {
+    console.log("in handle Button click");
+    this.setState({Count : this.state.Count + 1})
+    await this.setState({
+       AddToCardTitle:this.props.value.TITLE,
+       AddToCardAuthor:this.props.value.AUTHOR,   
+       AddToCardImageURL:this.props.value.IMAGEURL,
     });
+    var addToCartBook = {
+      Title: this.props.value.TITLE,
+      Author:this.props.value.AUTHOR,
+      ImageURL:this.props.value.IMAGEURL,
+      Price : this.props.value.PRICE,
+      Count : this.state.Count
+    }
+    this.props.getBook(addToCartBook)
   }
-  AddtoBag() {}
-  AddWishList() {}
+  AddtoBag() {
+    // this.props.history.push('/addToCart')
+  }
+  AddWishList() {
+    this.setState({ a:this.props.value.TITLE  });
+  }
   render() {
+    console.log("indashBoard",this.state.Count);
+    
     return (
       <div>
         <Card
@@ -60,8 +85,8 @@ class dashboard extends Component {
                   fontFamily: "Times New Roman",
                   color: "black",
                   marginTop: -10,
-                  fontSize: 13,
-                  marginLeft: 10
+                  fontSize: 10,
+                  marginLeft: 10,
                 }}
               >
                 {this.props.value.TITLE}
@@ -107,7 +132,7 @@ class dashboard extends Component {
             </CardContent>
           </CardActionArea>
           <CardActions className="bookdiv">
-            <div className="button1" onClick={this.AddtoBag}>
+            <div className="button1">
               <Button
                 onClick={this.handleButtonClick}
                 className={this.state.button ? "buttonTrue" : "buttonFalse"}

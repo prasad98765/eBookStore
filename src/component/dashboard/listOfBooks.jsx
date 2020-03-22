@@ -7,6 +7,18 @@ var APIcall = require("../../congfiguration/BookStoreCallAPI");
 class dashboard extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      addToCart : []
+    }
+  }
+
+  getbook = (value) => {
+    console.log("in list of book calss",value);
+    this.setState({ addToCart:value });
+    this.props.getBookToaddToCart(this.state.addToCart)
+  }
+  addToCart = {
+    
   }
   render() {
     
@@ -16,7 +28,7 @@ class dashboard extends Component {
           <div className="App__Form">
             <div style={{ display: "flex", flexWrap: "wrap",marginLeft:"20px",marginLeft:"100px",marginTop:"-40px"}}>
                   {this.props.bookList.map((value, index) => {
-                return <Dashboard key={index} value={value}></Dashboard>;
+                return <Dashboard key={index} value={value} getBook = {this.getbook}></Dashboard>;
               })}
             </div>
           </div>

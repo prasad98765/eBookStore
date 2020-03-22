@@ -1,23 +1,22 @@
 import React, { Component } from "react";
-// import TextField from '../src/component/textField/textfield';
-// import TopBar from './component/topbar/navbar'
-// import Dashboard from "./component/dashboard/dashboard";
 
-import Routes from "../src/component/routes"
-
-
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import BookStoreFirstPage from './component/FrontPage/BookStoreFirstPage'
+import CustDetails from './component/addToCart/addToCart'
+import SignUpAndSignIn from './component/login/singUpAndSign'
+import TopBar from "./component/topbar/navbar";
 import "./App.css";
 
 class App extends Component {
   render() {
     return (
-      <div>
-        <div>
-          {/* <ListOfBook /> */}
-          <Routes></Routes>
-        </div>
-       
-      </div>
+      <BrowserRouter>
+      <Switch>
+        <Route path = "/" component = {BookStoreFirstPage} exact = {true}/>
+        <Route path = "/addToCart" component = {CustDetails}/>
+        <Route path = "/login" component = {SignUpAndSignIn}/>
+      </Switch>
+      </BrowserRouter>
     );
   }
 }
