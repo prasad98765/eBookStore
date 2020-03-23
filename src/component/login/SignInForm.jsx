@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 const emailRegex = RegExp(
   "^[a-zA-Z0-9]([._+-]{0,1}[a-zA-Z0-9])*[@]{1}[a-zA-Z0-9]{1,}[.]{1}[a-zA-Z]{2,3}([.]{1}[a-zA-Z]{2,3}){0,1}$"
 );
@@ -55,6 +56,9 @@ class SignInForm extends Component {
         break;
     }
     this.setState({ formErrors, [name]: value }, () => console.log(this.state));
+  }
+  login =() => {
+    this.props.history.push( { pathname : '/addToCart' })
   }
 
   handleSubmit(e) {
@@ -152,4 +156,4 @@ class SignInForm extends Component {
     );
   }
 }
-export default SignInForm;
+export default withRouter(SignInForm);

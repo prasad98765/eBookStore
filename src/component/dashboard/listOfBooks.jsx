@@ -13,15 +13,10 @@ class dashboard extends Component {
   }
 
   getbook = (value) => {
-    console.log("in list of book calss",value);
-    this.setState({ addToCart:value });
+    this.state.addToCart.push(value)
     this.props.getBookToaddToCart(this.state.addToCart)
   }
-  addToCart = {
-    
-  }
   render() {
-    
     return (
       <div>
         <div basename="/react-auth-ui/">
@@ -31,6 +26,7 @@ class dashboard extends Component {
                 return <Dashboard key={index} value={value} getBook = {this.getbook}></Dashboard>;
               })}
             </div>
+            
           </div>
           <Pagination shape = "rounded" style={{display:"flex",justifyContent:"center",marginTop:"30px",marginBottom:"20px"}} count={Math.ceil(this.props.noOfRecord / 12)}
             onChange = {this.props.handleChange}/>

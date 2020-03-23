@@ -6,51 +6,77 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 import "../dashboard/dashboard.css";
+
+const styles = theme => ({
+  close: {
+    padding: theme.spacing.unit / 2
+  }
+});
+
 class dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      button: true,
-      title:"",
-      addToCart : [],
-      AddToCardTitle: null,
-      AddToCardAuthor:null,
-      AddToCardImageURL:null,
-      Count:0
-
+      button: false,
+      title: "",
+      addToCart: [],
+      Count: 0,
+      WishListTitle: null,
+      WishListAuthor: null,
+      WishListImageURL: null,
+      addToWishList: [],
+      widths:80
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleWishListButtonClick = this.handleWishListButtonClick.bind(this);
   }
-  wishListClick(event) {
-  }
-  async handleButtonClick (event) {
-    console.log("in handle Button click");
-    this.setState({Count : this.state.Count + 1})
-    await this.setState({
-       AddToCardTitle:this.props.value.TITLE,
-       AddToCardAuthor:this.props.value.AUTHOR,   
-       AddToCardImageURL:this.props.value.IMAGEURL,
-    });
+  async handleButtonClick() {
     var addToCartBook = {
       Title: this.props.value.TITLE,
-      Author:this.props.value.AUTHOR,
-      ImageURL:this.props.value.IMAGEURL,
-      Price : this.props.value.PRICE,
-      Count : this.state.Count
+      Author: this.props.value.AUTHOR,
+      ImageURL: this.props.value.IMAGEURL,
+      Price: this.props.value.PRICE,
+    };
+    this.props.getBook(addToCartBook);
+    this.setState({ open: true,widths:165 });
+  }
+  async handleWishListButtonClick(event) {
+    await this.setState({
+      WishListTitle: this.props.value.TITLE,
+      WishListAuthor: this.props.value.AUTHOR,
+      WishListImageURL: this.props.value.IMAGEURL
+    });
+    var addToWishList = {
+      Title: this.props.value.TITLE,
+      Author: this.props.value.AUTHOR,
+      ImageURL: this.props.value.IMAGEURL,
+      Price: this.props.value.PRICE
+    };
+    this.props.getBook(addToWishList);
+    this.setState({ open: true,
+    width:165,
+    message:"Added To Bag",
+    button:false 
+  });
+  }
+
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
     }
-    this.props.getBook(addToCartBook)
-  }
-  AddtoBag() {
-    // this.props.history.push('/addToCart')
-  }
-  AddWishList() {
-    this.setState({ a:this.props.value.TITLE  });
-  }
+    this.setState({ open: false });
+  };
+
   render() {
-    console.log("indashBoard",this.state.Count);
+    console.log("indashBoard", this.state.Count);
+    const { classes } = this.props;
     
+
     return (
       <div>
         <Card
@@ -63,113 +89,217 @@ class dashboard extends Component {
             transition: "0.3s"
           }}
         >
-          <CardActionArea>
-            <Tooltip title={this.props.value.DESCRIPTION} arrow>
-              <div className="xyz">
-                <img
-                  className="imagePath"
-                  src={this.props.value.IMAGEURL}
-                  style={{
-                    height: "150px",
-                    width: "70%",
-                    marginTop: "6%",
-                    marginLeft: "15%"
-                  }}
-                  alt="no Cover"
-                />
+          {this.props.value.NOOFCOUNT === 0 ? (
+            <div>
+              <img
+                className="imagePath"
+                src={this.props.value.IMAGEURL}
+                style={{
+                  opacity: 0.5,
+                  height: "150px",
+                  width: "70%",
+                  marginTop: "6%",
+                  marginLeft: "15%"
+                }}
+                alt="no Cover"
+              />
+              <div style = {{marginTop :"-10%"}} >
+              <h3
+                style={{
+                  backgroundColor: "orange",
+                  marginLeft: 13,
+                  marginRight: 13
+                }}
+              >
+                OUT OF STOCK
+              </h3>
               </div>
-            </Tooltip>
-            <CardContent>
-              <Typography
-                style={{
-                  fontFamily: "Times New Roman",
-                  color: "black",
-                  marginTop: -10,
-                  fontSize: 10,
-                  marginLeft: 10,
-                }}
-              >
-                {this.props.value.TITLE}
-              </Typography>
-            </CardContent>
-            <CardContent>
-              <Typography
-                style={{
-                  fontFamily: "Times New Roman",
-                  color: "grey",
-                  marginTop: -30,
-                  fontSize: 10,
-                  marginLeft: 10
-                }}
-              >
-                {this.props.value.AUTHOR}
-              </Typography>
-            </CardContent>
-            <CardContent>
-              <Typography
-                style={{
-                  fontFamily: "Times New Roman",
-                  color: "black",
-                  fontSize: 10,
-                  marginLeft: 10,
-                  marginTop: -45
-                }}
-              >
-                {this.props.value.PRICE}
-              </Typography>
-              {/* <div style = {{
-                display: "flex",
-                flex: "row",
-                justif: "center",
-                width: "100%",
-                color: "white"
-            }}>
-                  {(this.props.value.NOOFCOUNT == 0)
-                  ? <outOfStock></outOfStock>
-                  :<OutOfStck/>
-                  }
-            </div> */}
-            </CardContent>
-          </CardActionArea>
-          <CardActions className="bookdiv">
-            <div className="button1">
-              <Button
-                onClick={this.handleButtonClick}
-                className={this.state.button ? "buttonTrue" : "buttonFalse"}
-                style={{
-                  border: "none",
-                  backgroundColor: "#800000",
-                  color: "white",
-                  textDecoration: "none",
-                  display: "inlineBlock",
-                  transitionDuration: 0.4,
-                  marginTop: -70,
-                  marginTop: -70,
-                  width: 80,
-                  height: 30,
-                  fontSize: "0.60em"
-                }}
-              >
-                Add to Bag
-              </Button>
+
+              <CardActionArea>
+                <Tooltip title={this.props.value.DESCRIPTION} arrow>
+                  <div className="xyz"></div>
+                </Tooltip>
+                <CardContent>
+                  <Typography
+                    style={{
+                      fontFamily: "Times New Roman",
+                      color: "black",
+                      marginTop: -10,
+                      fontSize: 10,
+                      marginLeft: 10
+                    }}
+                  >
+                    {this.props.value.TITLE}
+                  </Typography>
+                </CardContent>
+                <CardContent>
+                  <Typography
+                    style={{
+                      fontFamily: "Times New Roman",
+                      color: "grey",
+                      marginTop: -30,
+                      fontSize: 10,
+                      marginLeft: 10
+                    }}
+                  >
+                    {this.props.value.AUTHOR}
+                  </Typography>
+                </CardContent>
+                <CardContent>
+                  <Typography
+                    style={{
+                      fontFamily: "Times New Roman",
+                      color: "black",
+                      fontSize: 10,
+                      marginLeft: 10,
+                      marginTop: -45
+                    }}
+                  >
+                    {this.props.value.PRICE}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
             </div>
-            <div className="button2" onClick={this.AddWishList}>
-              <Button
-                style={{
-                  borderStyle: "solid",
-                  borderWidth: "thin",
-                  width: 70,
-                  height: 30,
-                  marginTop: -70,
-                  fontFamily: "Times New Roman",
-                  color: "black",
-                  fontSize: "0.60em"
-                }}
-              >
-                Wishlist
-              </Button>
+          ) : (
+            <div>
+              <CardActionArea>
+                <Tooltip title={this.props.value.DESCRIPTION} arrow>
+                  <div className="xyz">
+                    <img
+                      className="imagePath"
+                      src={this.props.value.IMAGEURL}
+                      style={{
+                        height: "150px",
+                        width: "70%",
+                        marginTop: "6%",
+                        marginLeft: "15%"
+                      }}
+                      alt="no Cover"
+                    />
+                  </div>
+                </Tooltip>
+                <CardContent>
+                  <Typography
+                    style={{
+                      fontFamily: "Times New Roman",
+                      color: "black",
+                      marginTop: -10,
+                      fontSize: 10,
+                      marginLeft: 10
+                    }}
+                  >
+                    {this.props.value.TITLE}
+                  </Typography>
+                </CardContent>
+                <CardContent>
+                  <Typography
+                    style={{
+                      fontFamily: "Times New Roman",
+                      color: "grey",
+                      marginTop: -30,
+                      fontSize: 10,
+                      marginLeft: 10
+                    }}
+                  >
+                    {this.props.value.AUTHOR}
+                  </Typography>
+                </CardContent>
+                <CardContent>
+                  <Typography
+                    style={{
+                      fontFamily: "Times New Roman",
+                      color: "black",
+                      fontSize: 10,
+                      marginLeft: 10,
+                      marginTop: -45
+                    }}
+                  >
+                    {this.props.value.PRICE}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+              <CardActions className="bookdiv">
+                <div className="button1">
+                  <Button
+                    onClick={this.handleButtonClick}
+                    className={this.state.button ? "buttonTrue" : "buttonFalse"}
+                    style={{
+                      border: "none",
+                      backgroundColor: "#800000",
+                      color: "white",
+                      textDecoration: "none",
+                      display: "inlineBlock",
+                      transitionDuration: 0.4,
+                      marginTop: -70,
+                      marginTop: -70,
+                      width: this.state.widths,
+                      height: 30,
+                      fontSize: "0.60em"
+                    }}
+                  >
+                    Add to Bag
+                  </Button>
+                </div>
+                <div className="button2">
+                  <Button
+                    onClick={this.handleWishListButtonClick}
+                    disabled = {!this.state.button}
+                    // className={this.state.button ? true : false}
+                    style={{
+                      borderStyle: "solid",
+                      borderWidth: "thin",
+                      width: 70,
+                      height: 30,
+                      marginTop: -70,
+                      fontFamily: "Times New Roman",
+                      color: "black",
+                      fontSize: "0.60em"
+                    }}
+                  >
+                    Wishlist
+                  </Button>
+                  <Snackbar
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "center"
+                    }}
+                    open={this.state.open}
+                    autoHideDuration={2000}
+                    onClose={this.handleClose}
+                    ContentProps={{
+                      "aria-describedby": "message-id"
+                    }}
+                    message={
+                      <span id="message-id">
+                        book : {this.props.value.TITLE} <br></br>author :{" "}
+                        {this.props.value.AUTHOR} <br></br>price :{" "}
+                        {this.props.value.PRICE} <br></br>added successfully
+                      </span>
+                    }
+                    action={[
+                      <Button
+                        key="undo"
+                        color="secondary"
+                        size="small"
+                        onClick={this.handleClose}
+                      >
+                        UNDO
+                      </Button>,
+                      <IconButton
+                        key="close"
+                        aria-label="Close"
+                        color="inherit"
+                        // className={classes.close}
+                        onClick={this.handleClose}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    ]}
+                  />
+                </div>
+              </CardActions>
             </div>
-          </CardActions>
+          )}
         </Card>
       </div>
     );

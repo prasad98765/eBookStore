@@ -6,11 +6,6 @@ import SignInForm from '../login/SignInForm';
 import '../login/signInAndSignUp.css'
 
 class SignUpAndSignIn extends Component {
-
-
-  login=(event) =>{
-
-  }
   render() {
     return (
       <Router basename="/react-auth-ui/">

@@ -13,7 +13,7 @@ class BookStoreFirstPage extends Component {
       page: 1,
       ALLBOOKS: [],
       noOfRecord: null,
-      addToCart : new Map(),
+      addToCart : null,
       count:0
     };
   }
@@ -54,22 +54,16 @@ class BookStoreFirstPage extends Component {
     
     this.props.history.push( { pathname : '/addToCart', state: this.state.addToCart })
   }
-  // login = (value) =>{
+  login = (value) =>{
     
-  //   this.props.history.push( { pathname : '/login', state: this.state.addToCart })
-  // }
+    this.props.history.push( { pathname : '/login', state: this.state.addToCart })
+  }
   getBookToaddToCart = (value) => {
-    // var books = new Map()
-    // books.set(value.Title,value)
-    // console.log("mapppppp",books);
     this.setState({ addToCart:value });
     this.setState({ count:this.state.count +1  });
-    console.log("in Book Store Fiast Page",value);
   }
 
   render() {
-    console.log("in book Store First Page",this.state.count);
-    
     return (
       <div>
         <TopBar bookList={this.state.ALLBOOKS} value={this.handleSearch} value1 = {this.addToCart} count = {this.state.count} login ={this.login}  />
