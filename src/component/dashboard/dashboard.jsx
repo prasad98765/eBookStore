@@ -198,7 +198,7 @@ class dashboard extends Component {
               className={this.state.button ? "buttonTrue" : "buttonFalse"}
                 style={{
                   borderStyle: "solid",
-                  borderWidth: "thin",
+                  borderWidth: "thin",git 
                   width: 70,
                   height: 30,
                   marginTop: -70,
