@@ -7,7 +7,18 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 import "../dashboard/dashboard.css";
+
+
+const styles = theme => ({
+  close: {
+    padding: theme.spacing.unit / 2
+  }
+});
+
 class dashboard extends Component {
   constructor(props) {
     super(props);
@@ -18,15 +29,20 @@ class dashboard extends Component {
       AddToCardTitle: null,
       AddToCardAuthor:null,
       AddToCardImageURL:null,
-      Count:0
+      Count:0,
+      WishListTitle:null,
+      WishListAuthor:null,
+      WishListImageURL:null,
+      addToWishList:[]
+
+
 
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleWishListButtonClick=this.handleWishListButtonClick.bind(this);
   }
-  wishListClick(event) {
-  }
+ 
   async handleButtonClick (event) {
-    console.log("in handle Button click");
     this.setState({Count : this.state.Count + 1})
     await this.setState({
        AddToCardTitle:this.props.value.TITLE,
@@ -41,15 +57,38 @@ class dashboard extends Component {
       Count : this.state.Count
     }
     this.props.getBook(addToCartBook)
+    this.setState({ open: true });
+
   }
-  AddtoBag() {
-    // this.props.history.push('/addToCart')
+  async handleWishListButtonClick (event) {
+    
+    await this.setState({
+       WishListTitle:this.props.value.TITLE,
+       WishListAuthor:this.props.value.AUTHOR,   
+       WishListImageURL:this.props.value.IMAGEURL,
+    });
+    var addToWishList = {
+      Title: this.props.value.TITLE,
+      Author:this.props.value.AUTHOR,
+      ImageURL:this.props.value.IMAGEURL,
+      Price : this.props.value.PRICE,
+    }
+    this.props.getBook(addToWishList)
+    this.setState({ open: true });
+
   }
-  AddWishList() {
-    this.setState({ a:this.props.value.TITLE  });
-  }
+
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({ open: false });
+  };
+
   render() {
     console.log("indashBoard",this.state.Count);
+    const { classes } = this.props;
+
     
     return (
       <div>
@@ -153,8 +192,10 @@ class dashboard extends Component {
                 Add to Bag
               </Button>
             </div>
-            <div className="button2" onClick={this.AddWishList}>
+            <div className="button2">
               <Button
+              onClick={this.handleWishListButtonClick}
+              className={this.state.button ? "buttonTrue" : "buttonFalse"}
                 style={{
                   borderStyle: "solid",
                   borderWidth: "thin",
@@ -168,6 +209,38 @@ class dashboard extends Component {
               >
                 Wishlist
               </Button>
+              <Snackbar
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "center"
+                }}
+                open={this.state.open}
+                autoHideDuration={2000}
+                onClose={this.handleClose}
+                ContentProps={{
+                  "aria-describedby": "message-id"
+                }}
+              message={<span id="message-id">book : {this.props.value.TITLE} <br></br>author : {this.props.value.AUTHOR} <br></br>price : {this.props.value.PRICE} <br></br>added successfully</span>}
+                action={[
+                  <Button
+                    key="undo"
+                    color="secondary"
+                    size="small"
+                    onClick={this.handleClose}
+                  >
+                    UNDO
+                  </Button>,
+                  <IconButton
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
+                    // className={classes.close}
+                    onClick={this.handleClose}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                ]}
+              />
             </div>
           </CardActions>
         </Card>

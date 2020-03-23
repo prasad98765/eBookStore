@@ -210,8 +210,8 @@ class PrimarySearchAppBar extends React.Component {
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
-              <IconButton color="inherit">
-                <Badge badgeContent={17} color="secondary">
+              <IconButton color="inherit" onClick={this.onSubmit} >
+                <Badge badgeContent={this.props.BOOKSCOUNT} color="secondary">
                   <FavoriteRoundedIcon />
                 </Badge>
               </IconButton>
