@@ -7,7 +7,7 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
-import '/home/admin1/Desktop/finalBootStore/eBookStoreUi/node_modules/bootstrap/dist/css/bootstrap-grid.min.css';
+import '../../../node_modules/bootstrap/dist/css/bootstrap-grid.min.css';
 
 
 // import service from '../../service/service'
@@ -44,18 +44,18 @@ class CustomerDetails extends Component {
       item: null,
       id: null
     };
-    console.log("asdfasdf", this.props.formDetails);
+    // console.log("asdfasdf", this.props.formDetails);
     this.state.item = this.props.detail;
     this.state.formHide = this.props.formDetails;
   }
 
   formHide = () => {
     this.setState({ formHide: true });
-    console.log("done");
+    // console.log("done");
   };
 
   editDetails = () => {
-    console.log("done");
+    // console.log("done");
     this.setState((this.state = { formfilled: !this.state.formfilled }));
     this.setState((this.state = { buttonHide: !this.state.buttonHide }));
     this.setState((this.state = { hidden: !this.state.hidden }));
@@ -64,7 +64,7 @@ class CustomerDetails extends Component {
   handleValueChange = event => {
     this.setState({[event.target.name]:event.target.value})
     // event.preventDefault();
-    console.log(event.target.value);
+    // console.log(event.target.value);
     const { name, value } = event.target;
     let errors = this.state.errors;
     const phonenumber = RegExp("^[0-9]{10}$");
@@ -145,8 +145,7 @@ class CustomerDetails extends Component {
     this.setState({ divHide: true });
     const validateForm = errors => {
       let valid = false;
-      console.log("length" + this.state.Name.length);
-      if (
+      if (this.state.Name&& this.state.Phone_Number&& this.state.Pincode && this.state.Email && this.state.Address && this.state.city && this.state.LandMark &&
         this.state.Name.length > 2 &&
         this.state.Phone_Number.length > 9 &&
         this.state.Pincode.length > 5 &&
@@ -156,11 +155,15 @@ class CustomerDetails extends Component {
         this.state.LandMark.length > 3
       ) {
         valid = true;
+        this.setState({ divHide: false });
+
         Object.values(errors).forEach(val => val.length > 0 && (valid = false));
         return valid;
       }
     };
     if (validateForm(this.state.errors)) {
+      console.log("gone at error part ====================================================>");
+      
       this.setState({ formfilled: !this.state.formfilled });
       this.setState({ buttonHide: !this.state.buttonHide });
       this.setState({ hidden: !this.state.hidden });
@@ -189,7 +192,7 @@ class CustomerDetails extends Component {
   };
 
   render() {
-    console.log("in C D page", this.state.item);
+    // console.log("in C D page", this.state.item);
 
     const { errors } = this.state;
     var Books = this.state.item.map((item, i) => {
@@ -400,9 +403,10 @@ class CustomerDetails extends Component {
 
               <button type="submit"
                 className="continue"
-                style={{ display: this.state.buttonHide ? "block" : "none" }}
+                style={{ display: this.state.buttonHide ? "flase" : "true" }}
                 onClick={this.onSubmit}
-                onSubmit={this.handleFormSubmit}
+                onSubmit={this.handleFormSubmit}  
+   
               >
                 CONTINUE
               </button>
@@ -410,7 +414,9 @@ class CustomerDetails extends Component {
             </div>
           </div>
         </div>
-        <div
+{this.state.divHide=="false"?
+<div>
+       <div
           style={{
             borderStyle: "outset",
             marginLeft: "10%",
@@ -431,8 +437,10 @@ class CustomerDetails extends Component {
             >
               Checkout
             </Button>
+            </div>
           </div>
-        </div>
+        </div>:<div></div>
+  }
       </div>
     );
   }
