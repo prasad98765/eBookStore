@@ -8,13 +8,19 @@ class dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      addToCart : []
+      addToCart : [],
+      addToWishList:[]
     }
   }
 
   getbook = (value) => {
     this.state.addToCart.push(value)
     this.props.getBookToaddToCart(this.state.addToCart)
+  }
+
+  getWishBook=(value)=>{
+    this.state.addToWishList.push(value)
+    this.props.getBookToWishList(this.state.addToWishList)
   }
   render() {
     return (
@@ -23,7 +29,7 @@ class dashboard extends Component {
           <div className="App__Form">
             <div style={{ display: "flex", flexWrap: "wrap",marginLeft:"20px",marginLeft:"100px",marginTop:"-40px"}}>
                   {this.props.bookList.map((value, index) => {
-                return <Dashboard key={index} value={value} getBook = {this.getbook}></Dashboard>;
+                return <Dashboard key={index} value={value} getBook = {this.getbook} getWishBook={this.getWishBook}></Dashboard>;
               })}
             </div>
             

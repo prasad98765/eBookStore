@@ -7,11 +7,14 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
+import '/home/admin1/Desktop/finalBootStore/eBookStoreUi/node_modules/bootstrap/dist/css/bootstrap-grid.min.css';
+
 
 // import service from '../../service/service'
 // import { withRouter } from 'react-router-dom';
 
 class CustomerDetails extends Component {
+  documentData;
   constructor(props) {
     super(props);
     this.state = {
@@ -20,6 +23,7 @@ class CustomerDetails extends Component {
       Pincode: "",
       Email: "",
       Address: "",
+      Locality:"",
       city: "",
       LandMark: "",
       errors: {
@@ -28,6 +32,7 @@ class CustomerDetails extends Component {
         Pincode: "",
         Email: "",
         Address: "",
+        Locality:"",
         city: "",
         LandMark: ""
       },
@@ -57,7 +62,8 @@ class CustomerDetails extends Component {
   };
 
   handleValueChange = event => {
-    event.preventDefault();
+    this.setState({[event.target.name]:event.target.value})
+    // event.preventDefault();
     console.log(event.target.value);
     const { name, value } = event.target;
     let errors = this.state.errors;
@@ -100,6 +106,40 @@ class CustomerDetails extends Component {
       console.log(errors);
     });
   };
+
+
+  handleFormSubmit= event=>{
+    
+    event.preventDefault()
+    localStorage.setItem('document', JSON.stringify(this.state))
+  }
+
+  componentDidMount(){
+    this.documentData=JSON.parse(localStorage.getItem('document'));
+
+    if(localStorage.getItem('document')){
+      this.setState({
+        Name:this.documentData.Name,
+        Phone_Number:this.documentData.Phone_Number,
+        Pincode:this.documentData.Pincode,
+        Locality:this.documentData.Locality,
+        Address:this.documentData.Address,
+        city:this.documentData.city,
+        LandMark:this.documentData.LandMark
+      })
+    }else{
+      this.setState({
+        Name:'',
+        Phone_Number:'',
+        Pincode:'',
+        Locality:'',
+        Address:'',
+        city:'',
+        LandMark:''
+      })
+    }
+  }
+
   onSubmit = event => {
     event.preventDefault();
     this.setState({ divHide: true });
@@ -120,7 +160,6 @@ class CustomerDetails extends Component {
         return valid;
       }
     };
-
     if (validateForm(this.state.errors)) {
       this.setState({ formfilled: !this.state.formfilled });
       this.setState({ buttonHide: !this.state.buttonHide });
@@ -196,6 +235,7 @@ class CustomerDetails extends Component {
               className="formHide"
               style={{ display: this.state.formHide ? "block" : "none" }}
             >
+              <form onSubmit={this.handleFormSubmit}>
               <Button
                 className="editButton"
                 component="span"
@@ -358,13 +398,15 @@ class CustomerDetails extends Component {
                 </RadioGroup>
               </FormControl>
 
-              <div
+              <button type="submit"
                 className="continue"
                 style={{ display: this.state.buttonHide ? "block" : "none" }}
                 onClick={this.onSubmit}
+                onSubmit={this.handleFormSubmit}
               >
                 CONTINUE
-              </div>
+              </button>
+              </form>
             </div>
           </div>
         </div>

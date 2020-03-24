@@ -91,7 +91,8 @@ class PrimarySearchAppBar extends React.Component {
     this.state = {
       bookSearch: "",
       searchedBookList: [],
-      count : 1
+      count : 1,
+      wishCount:1
 
     };
   }
@@ -211,7 +212,7 @@ class PrimarySearchAppBar extends React.Component {
                 </Badge>
               </IconButton>
               <IconButton color="inherit" onClick={this.onSubmit} >
-                <Badge badgeContent={this.props.BOOKSCOUNT} color="secondary">
+                <Badge  color="secondary">
                   <FavoriteRoundedIcon />
                 </Badge>
               </IconButton>

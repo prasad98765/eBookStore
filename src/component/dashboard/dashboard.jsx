@@ -25,44 +25,43 @@ class dashboard extends Component {
       button: false,
       title: "",
       addToCart: [],
-      Count: 0,
       WishListTitle: null,
       WishListAuthor: null,
       WishListImageURL: null,
       addToWishList: [],
-      widths:80
+      widths: 80,
+      message: "ADD TO BAG",
+      button: "buttonTrue"
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleWishListButtonClick = this.handleWishListButtonClick.bind(this);
   }
   async handleButtonClick() {
-    var addToCartBook = {
-      Title: this.props.value.TITLE,
-      Author: this.props.value.AUTHOR,
-      ImageURL: this.props.value.IMAGEURL,
-      Price: this.props.value.PRICE,
-    };
-    this.props.getBook(addToCartBook);
-    this.setState({ open: true,widths:165 });
+    if (this.state.button == "buttonTrue") {
+      var addToCartBook = {
+        Title: this.props.value.TITLE,
+        Author: this.props.value.AUTHOR,
+        ImageURL: this.props.value.IMAGEURL,
+        Price: this.props.value.PRICE
+      };
+      this.props.getBook(addToCartBook);
+      this.setState({
+        open: true,
+        widths: 165,
+        message: "Added To Bag",
+        button: "buttonFalse"
+      });
+    }
   }
   async handleWishListButtonClick(event) {
-    await this.setState({
-      WishListTitle: this.props.value.TITLE,
-      WishListAuthor: this.props.value.AUTHOR,
-      WishListImageURL: this.props.value.IMAGEURL
-    });
     var addToWishList = {
       Title: this.props.value.TITLE,
       Author: this.props.value.AUTHOR,
       ImageURL: this.props.value.IMAGEURL,
       Price: this.props.value.PRICE
     };
-    this.props.getBook(addToWishList);
-    this.setState({ open: true,
-    width:165,
-    message:"Added To Bag",
-    button:false 
-  });
+    this.props.getWishBook(addToWishList);
+    this.setState({ open: true, width: 165 });
   }
 
   handleClose = (event, reason) => {
@@ -75,7 +74,6 @@ class dashboard extends Component {
   render() {
     console.log("indashBoard", this.state.Count);
     const { classes } = this.props;
-    
 
     return (
       <div>
@@ -103,16 +101,16 @@ class dashboard extends Component {
                 }}
                 alt="no Cover"
               />
-              <div style = {{marginTop :"-10%"}} >
-              <h3
-                style={{
-                  backgroundColor: "orange",
-                  marginLeft: 13,
-                  marginRight: 13
-                }}
-              >
-                OUT OF STOCK
-              </h3>
+              <div style={{ marginTop: "-10%" }}>
+                <h3
+                  style={{
+                    backgroundColor: "orange",
+                    marginLeft: 13,
+                    marginRight: 13
+                  }}
+                >
+                  OUT OF STOCK
+                </h3>
               </div>
 
               <CardActionArea>
@@ -237,14 +235,14 @@ class dashboard extends Component {
                       fontSize: "0.60em"
                     }}
                   >
-                    Add to Bag
+                    {this.state.message}
                   </Button>
                 </div>
                 <div className="button2">
                   <Button
                     onClick={this.handleWishListButtonClick}
-                    disabled = {!this.state.button}
-                    // className={this.state.button ? true : false}
+                    disabled={!this.state.button}
+                    className={this.state.button ? "buttonTrue" : "buttonFalse"}
                     style={{
                       borderStyle: "solid",
                       borderWidth: "thin",

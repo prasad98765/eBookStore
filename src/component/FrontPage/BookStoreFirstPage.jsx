@@ -14,7 +14,8 @@ class BookStoreFirstPage extends Component {
       ALLBOOKS: [],
       noOfRecord: null,
       addToCart : null,
-      count:0
+      count:0,
+      wishCount:0
     };
   }
 
@@ -62,16 +63,21 @@ class BookStoreFirstPage extends Component {
     this.setState({ addToCart:value });
     this.setState({ count:this.state.count +1  });
   }
+  getBookToWishList=(value)=>{
+    this.setState({addToWishList:value});
+    this.setState({wishCount:this.setState.wishCount +1 })
+  }
 
   render() {
     return (
       <div>
-        <TopBar bookList={this.state.ALLBOOKS} value={this.handleSearch} value1 = {this.addToCart} count = {this.state.count} login ={this.login}  />
+        <TopBar bookList={this.state.ALLBOOKS} value={this.handleSearch} value1 = {this.addToCart} count = {this.state.count} wishCount={this.state.wishCount} login ={this.login}  />
         <Sorting bookList={this.state.ALLBOOKS} bookcount = {this.state.noOfRecord} value={this.handleSorting} />
         <ListOfBooks
           bookList={this.state.ALLBOOKS}
           handleChange={this.handleChange}
           getBookToaddToCart={this.getBookToaddToCart}
+          getBookToWishList={this.getBookToWishList}
           noOfRecord={this.state.noOfRecord}
         />
       </div>
