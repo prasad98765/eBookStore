@@ -7,8 +7,7 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
-import '../../../node_modules/bootstrap/dist/css/bootstrap-grid.min.css';
-
+import "../../../node_modules/bootstrap/dist/css/bootstrap-grid.min.css";
 
 // import service from '../../service/service'
 // import { withRouter } from 'react-router-dom';
@@ -23,7 +22,7 @@ class CustomerDetails extends Component {
       Pincode: "",
       Email: "",
       Address: "",
-      Locality:"",
+      Locality: "",
       city: "",
       LandMark: "",
       errors: {
@@ -32,7 +31,7 @@ class CustomerDetails extends Component {
         Pincode: "",
         Email: "",
         Address: "",
-        Locality:"",
+        Locality: "",
         city: "",
         LandMark: ""
       },
@@ -62,7 +61,7 @@ class CustomerDetails extends Component {
   };
 
   handleValueChange = event => {
-    this.setState({[event.target.name]:event.target.value})
+    this.setState({ [event.target.name]: event.target.value });
     // event.preventDefault();
     // console.log(event.target.value);
     const { name, value } = event.target;
@@ -107,36 +106,34 @@ class CustomerDetails extends Component {
     });
   };
 
+  handleFormSubmit = event => {
+    event.preventDefault();
+    localStorage.setItem("document", JSON.stringify(this.state));
+  };
 
-  handleFormSubmit= event=>{
-    
-    event.preventDefault()
-    localStorage.setItem('document', JSON.stringify(this.state))
-  }
+  componentDidMount() {
+    this.documentData = JSON.parse(localStorage.getItem("document"));
 
-  componentDidMount(){
-    this.documentData=JSON.parse(localStorage.getItem('document'));
-
-    if(localStorage.getItem('document')){
+    if (localStorage.getItem("document")) {
       this.setState({
-        Name:this.documentData.Name,
-        Phone_Number:this.documentData.Phone_Number,
-        Pincode:this.documentData.Pincode,
-        Locality:this.documentData.Locality,
-        Address:this.documentData.Address,
-        city:this.documentData.city,
-        LandMark:this.documentData.LandMark
-      })
-    }else{
+        Name: this.documentData.Name,
+        Phone_Number: this.documentData.Phone_Number,
+        Pincode: this.documentData.Pincode,
+        Locality: this.documentData.Locality,
+        Address: this.documentData.Address,
+        city: this.documentData.city,
+        LandMark: this.documentData.LandMark
+      });
+    } else {
       this.setState({
-        Name:'',
-        Phone_Number:'',
-        Pincode:'',
-        Locality:'',
-        Address:'',
-        city:'',
-        LandMark:''
-      })
+        Name: "",
+        Phone_Number: "",
+        Pincode: "",
+        Locality: "",
+        Address: "",
+        city: "",
+        LandMark: ""
+      });
     }
   }
 
@@ -145,7 +142,14 @@ class CustomerDetails extends Component {
     this.setState({ divHide: true });
     const validateForm = errors => {
       let valid = false;
-      if (this.state.Name&& this.state.Phone_Number&& this.state.Pincode && this.state.Email && this.state.Address && this.state.city && this.state.LandMark &&
+      if (
+        this.state.Name &&
+        this.state.Phone_Number &&
+        this.state.Pincode &&
+        this.state.Email &&
+        this.state.Address &&
+        this.state.city &&
+        this.state.LandMark &&
         this.state.Name.length > 2 &&
         this.state.Phone_Number.length > 9 &&
         this.state.Pincode.length > 5 &&
@@ -162,8 +166,10 @@ class CustomerDetails extends Component {
       }
     };
     if (validateForm(this.state.errors)) {
-      console.log("gone at error part ====================================================>");
-      
+      console.log(
+        "gone at error part ====================================================>"
+      );
+
       this.setState({ formfilled: !this.state.formfilled });
       this.setState({ buttonHide: !this.state.buttonHide });
       this.setState({ hidden: !this.state.hidden });
@@ -197,20 +203,25 @@ class CustomerDetails extends Component {
     const { errors } = this.state;
     var Books = this.state.item.map((item, i) => {
       return (
-        <div>
+        <div
+          style={{ marginLeft: "3%", marginRight: "10%", marginTop: "0.5%" }}
+        >
           <div
             className="divHide"
             style={{ display: this.state.divHide ? "block" : "none" }}
           >
             <div>
               <div className="cart-image">
-                   <img className="image" src={item.ImageURL}
-                             style={{
-                               height: "100px",
-                               width: "10%",
-                               marginTop: "2%",
-                               marginLeft: "1%"
-                             }}></img>
+                <img
+                  className="image"
+                  src={item.ImageURL}
+                  style={{
+                    height: "80px",
+                    width: "10%",
+                    marginTop: "-1%",
+                    marginLeft: "-3%"
+                  }}
+                ></img>
                 <div className="book-title">
                   {item.Title}
                   <div className="book-author">{item.Author}</div>
@@ -228,9 +239,10 @@ class CustomerDetails extends Component {
           <div
             style={{
               borderStyle: "outset",
-              marginLeft: "10%",
+              marginLeft: "17%",
               marginRight: "10%",
-              marginTop: "5%"
+              marginTop: "-2%",
+              width: "50%"
             }}
           >
             <div className="orderSummary">CustomerDetails</div>
@@ -239,208 +251,236 @@ class CustomerDetails extends Component {
               style={{ display: this.state.formHide ? "block" : "none" }}
             >
               <form onSubmit={this.handleFormSubmit}>
-              <Button
-                className="editButton"
-                component="span"
-                style={{
-                  marginLeft: "90%",
-                  display: this.state.hidden ? "block" : "none"
-                }}
-                onClick={this.editDetails}
-              >
-                Edit
-              </Button>
+                <Button
+                  className="editButton"
+                  component="span"
+                  style={{
+                    marginLeft: "90%",
+                    display: this.state.hidden ? "block" : "none"
+                  }}
+                  onClick={this.editDetails}
+                >
+                  Edit
+                </Button>
 
-              <div className="content">
-                <div className="name">
+                <div className="content">
+                  <div className="name">
+                    <TextField
+                      id="outlined-basic"
+                      className="textField"
+                      label="Name"
+                      name="Name"
+                      required
+                      variant="outlined"
+                      value={this.state.Name}
+                      onChange={event => this.handleValueChange(event)}
+                      disabled={this.state.formfilled}
+                    />
+                    {errors.Name.length > 0 && (
+                      <span className="error">{errors.Name}</span>
+                    )}
+                  </div>
+                  <div className="phonenumber">
+                    <TextField
+                      id="outlined-basic"
+                      className="testField"
+                      label="Phone Number"
+                      name="Phone_Number"
+                      variant="outlined"
+                      required
+                      value={this.state.Phone_Number}
+                      onChange={event => this.handleValueChange(event)}
+                      disabled={this.state.formfilled}
+                    />
+                    {errors.Phone_Number.length > 0 && (
+                      <span className="error">{errors.Phone_Number}</span>
+                    )}
+                  </div>
+                </div>
+                <div className="content">
+                  <div className="name">
+                    <TextField
+                      id="outlined-basic"
+                      className="textField"
+                      label="Pincode"
+                      variant="outlined"
+                      name="Pincode"
+                      value={this.state.Pincode}
+                      required
+                      onChange={event => this.handleValueChange(event)}
+                      disabled={this.state.formfilled}
+                    />
+                    {errors.Pincode.length > 0 && (
+                      <span className="error">{errors.Pincode}</span>
+                    )}
+                  </div>
+                  <div className="phonenumber">
+                    <TextField
+                      id="outlined-basic"
+                      className="textField"
+                      label="Email"
+                      variant="outlined"
+                      name="Email"
+                      value={this.state.Email}
+                      variant="outlined"
+                      required
+                      onChange={event => this.handleValueChange(event)}
+                      disabled={this.state.formfilled}
+                    />
+                    {errors.Email.length > 0 && (
+                      <span className="error">{errors.Email}</span>
+                    )}
+                  </div>
+                </div>
+                <div className="address">
                   <TextField
-                    id="outlined-basic"
-                    className="textField"
-                    label="Name"
-                    name="Name"
+                    id="outlined-multiline-static"
+                    style={{ width: "68.7%"}}
+                    label="Address"
+                    name="Address"
+                    multiline
+                    rows="3"
                     required
-                    variant="outlined"
-                    value={this.state.Name}
+                    value={this.state.Address}
                     onChange={event => this.handleValueChange(event)}
                     disabled={this.state.formfilled}
+                    variant="outlined"
                   />
-                  {errors.Name.length > 0 && (
-                    <span className="error">{errors.Name}</span>
+                  {errors.Address.length > 0 && (
+                    <span className="error">{errors.Address}</span>
                   )}
                 </div>
-                <div className="phonenumber">
-                  <TextField
-                    id="outlined-basic"
-                    className="testField"
-                    label="Phone Number"
-                    name="Phone_Number"
-                    variant="outlined"
-                    required
-                    value={this.state.Phone_Number}
-                    onChange={event => this.handleValueChange(event)}
-                    disabled={this.state.formfilled}
-                  />
-                  {errors.Phone_Number.length > 0 && (
-                    <span className="error">{errors.Phone_Number}</span>
-                  )}
+                <div className="content">
+                  <div className="name">
+                    <TextField
+                      id="outlined-basic"
+                      className="textField"
+                      label="city/town"
+                      name="city"
+                      variant="outlined"
+                      required
+                      value={this.state.city}
+                      onChange={event => this.handleValueChange(event)}
+                      disabled={this.state.formfilled}
+                    />
+                    {errors.city.length > 0 && (
+                      <span className="error">{errors.city}</span>
+                    )}
+                  </div>
+                  <div className="phonenumber">
+                    <TextField
+                      id="outlined-basic"
+                      className="textField"
+                      label="Landmark"
+                      name="LandMark"
+                      required
+                      variant="outlined"
+                      value={this.state.LandMark}
+                      onChange={event => this.handleValueChange(event)}
+                      disabled={this.state.formfilled}
+                    />
+                    {errors.LandMark.length > 0 && (
+                      <span className="error">{errors.LandMark}</span>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className="content">
-                <div className="name">
-                  <TextField
-                    id="outlined-basic"
-                    className="textField"
-                    label="Pincode"
-                    variant="outlined"
-                    name="Pincode"
-                    value={this.state.Pincode}
-                    required
-                    onChange={event => this.handleValueChange(event)}
-                    disabled={this.state.formfilled}
-                  />
-                  {errors.Pincode.length > 0 && (
-                    <span className="error">{errors.Pincode}</span>
-                  )}
+                <div style={{ paddingLeft: "4%", paddingBottom: "1%" ,marginTop:"1%" }}>
+                  Type
                 </div>
-                <div className="phonenumber">
-                  <TextField
-                    id="outlined-basic"
-                    className="textField"
-                    label="Email"
-                    variant="outlined"
-                    name="Email"
-                    value={this.state.Email}
-                    variant="outlined"
-                    required
-                    onChange={event => this.handleValueChange(event)}
-                    disabled={this.state.formfilled}
-                  />
-                  {errors.Email.length > 0 && (
-                    <span className="error">{errors.Email}</span>
-                  )}
-                </div>
-              </div>
-              <div className="address">
-                <TextField
-                  id="outlined-multiline-static"
-                  style={{ width: "66%" }}
-                  label="Address"
-                  name="Address"
-                  multiline
-                  rows="3"
-                  required
-                  value={this.state.Address}
-                  onChange={event => this.handleValueChange(event)}
-                  disabled={this.state.formfilled}
-                  variant="outlined"
-                />
-                {errors.Address.length > 0 && (
-                  <span className="error">{errors.Address}</span>
-                )}
-              </div>
-              <div className="content">
-                <div className="name">
-                  <TextField
-                    id="outlined-basic"
-                    className="textField"
-                    label="city/town"
-                    name="city"
-                    variant="outlined"
-                    required
-                    value={this.state.city}
-                    onChange={event => this.handleValueChange(event)}
-                    disabled={this.state.formfilled}
-                  />
-                  {errors.city.length > 0 && (
-                    <span className="error">{errors.city}</span>
-                  )}
-                </div>
-                <div className="phonenumber">
-                  <TextField
-                    id="outlined-basic"
-                    className="textField"
-                    label="Landmark"
-                    name="LandMark"
-                    required
-                    variant="outlined"
-                    value={this.state.LandMark}
-                    onChange={event => this.handleValueChange(event)}
-                    disabled={this.state.formfilled}
-                  />
-                  {errors.LandMark.length > 0 && (
-                    <span className="error">{errors.LandMark}</span>
-                  )}
-                </div>
-              </div>
-              <div style={{ paddingLeft: "2%", paddingBottom: "1%" }}>Type</div>
-              <FormControl component="fieldset" style={{ paddingLeft: "2%" }}>
-                <RadioGroup aria-label="Type" color="primary" name="Type" row>
-                  <FormControlLabel
-                    value="Home"
-                    onChange={event => this.handleValueChange(event)}
-                    control={<Radio />}
-                    disabled={this.state.formfilled}
-                    label="Home"
-                  />
+                <FormControl component="fieldset" style={{ paddingLeft: "4%" }}>
+                  <RadioGroup aria-label="Type" color="primary" name="Type" row>
+                    <FormControlLabel
+                      value="Home"
+                      onChange={event => this.handleValueChange(event)}
+                      control={<Radio />}
+                      disabled={this.state.formfilled}
+                      label="Home"
+                    />
 
-                  <FormControlLabel
-                    value="Work"
-                    control={<Radio />}
-                    onChange={event => this.handleValueChange(event)}
-                    disabled={this.state.formfilled}
-                    label="Work"
-                  />
+                    <FormControlLabel
+                      value="Work"
+                      control={<Radio />}
+                      onChange={event => this.handleValueChange(event)}
+                      disabled={this.state.formfilled}
+                      label="Work"
+                    />
 
-                  <FormControlLabel
-                    value="Other"
-                    onChange={event => this.handleValueChange(event)}
-                    disabled={this.state.formfilled}
-                    control={<Radio />}
-                    label="Other"
-                  />
-                </RadioGroup>
-              </FormControl>
+                    <FormControlLabel
+                      value="Other"
+                      onChange={event => this.handleValueChange(event)}
+                      disabled={this.state.formfilled}
+                      control={<Radio />}
+                      label="Other"
+                    />
+                  </RadioGroup>
+                </FormControl>
 
-              <button type="submit"
-                className="continue"
-                style={{ display: this.state.buttonHide ? "flase" : "true" }}
-                onClick={this.onSubmit}
-                onSubmit={this.handleFormSubmit}  
-   
-              >
-                CONTINUE
-              </button>
+                <button
+                  style={{
+                    backgroundColor: "#3371b5",
+                    color: "whitesmoke",
+                    border: "none",
+                    padding: "1%",
+                    marginTop: "5%",
+                    marginLeft: "40%",
+                    marginBottom: " 5%",
+                    display: this.state.buttonHide ? "flase" : "true"
+                  }}
+                  type="submit"
+                  className="ButtonContinue"
+                  variant="contained"
+                  color="primary"
+                  onClick={this.onSubmit}
+                  onSubmit={this.handleFormSubmit}
+                >
+                  CONTINUE
+                </button>
               </form>
             </div>
           </div>
         </div>
-{this.state.divHide=="false"?
-<div>
-       <div
-          style={{
-            borderStyle: "outset",
-            marginLeft: "10%",
-            marginRight: "10%",
-            marginTop: "5%"
-          }}
-        >
-          <div className="orderSummary">Order Summary</div>
-          {Books}
+        {/* {this.state.divHide == "false" ? ( */}
+        <div>
           <div
-            className="buttonHide"
-            style={{ display: this.state.divHide ? "block" : "none" }}
+            style={{
+              borderStyle: "outset",
+              marginLeft: "17%",
+              marginRight: "10%",
+              marginTop: "2.9%",
+              marginBottom: "2%",
+              width: "50%"
+            }}
           >
-            <Button
-              onClick={() => this.onCheckout()}
-              variant="contained"
-              color="primary"
+            <div className="orderSummary">Order Summary</div>
+            {Books}
+            <div
+              
+              style={{ display: this.state.divHide ? "block" : "none" }}
             >
-              Checkout
-            </Button>
+              <Button
+                style={{
+                  backgroundColor: "#3371b5",
+                  color: "whitesmoke",
+                  border: "none",
+                  padding: "1%",
+                  marginTop: "5%",
+                  marginLeft: "82%",
+                  height:"30px",
+                  marginBottom: " 5%"
+                  
+                }}
+                onClick={() => this.onCheckout()}
+                variant="contained"
+                color="primary"
+              >
+                Checkout
+              </Button>
             </div>
           </div>
-        </div>:<div></div>
-  }
+        </div>
+        {/* ) : ( */}
+        {/* <div></div> */}
+        {/* )} */}
       </div>
     );
   }

@@ -25,8 +25,8 @@ class dashboard extends Component {
   render() {
     return (
       <div>
-        <div basename="/react-auth-ui/">
-          <div className="App__Form">
+        <div>
+          <div>
             <div style={{ display: "flex", flexWrap: "wrap",marginLeft:"20px",marginLeft:"100px",marginTop:"-40px"}}>
                   {this.props.bookList.map((value, index) => {
                 return <Dashboard key={index} value={value} getBook = {this.getbook} getWishBook={this.getWishBook}></Dashboard>;

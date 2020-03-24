@@ -11,7 +11,7 @@ import { withRouter } from 'react-router-dom';
 import Footer from "../footer/footer";
 import orderImage from "../checkout/download (1).png";
 import "../checkout/checkout.css";
-
+import Navbar from '../topbar/navbar'
 class OrderPlaced extends Component {
   constructor(props) {
     super(props);
@@ -25,9 +25,10 @@ class OrderPlaced extends Component {
   render() {
     return (
       <div>
+        <Navbar/>
         <div className="mainDiv">
           <div className="orderImage">
-            <img src={orderImage} style={{ width: "60%",marginLeft:"-115%" }} />
+            <img src={orderImage}   />
           </div>
           {/* <div style={{marginTop:"10%"}}> */}
             <div className="orderMessage">
