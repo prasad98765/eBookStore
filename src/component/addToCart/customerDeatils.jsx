@@ -13,6 +13,7 @@ import "../../../node_modules/bootstrap/dist/css/bootstrap-grid.min.css";
 // import { withRouter } from 'react-router-dom';
 
 class CustomerDetails extends Component {
+  // divHide=false; 
   documentData;
   constructor(props) {
     super(props);
@@ -62,6 +63,7 @@ class CustomerDetails extends Component {
 
   handleValueChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+    this.setState({divHide:false})
     // event.preventDefault();
     // console.log(event.target.value);
     const { name, value } = event.target;
@@ -104,6 +106,8 @@ class CustomerDetails extends Component {
     this.setState({ errors, [name]: value }, () => {
       console.log(errors);
     });
+    console.log('value of div hide in handleChangeValue function======================>',this.state.divHide);
+    
   };
 
   handleFormSubmit = event => {
@@ -119,6 +123,7 @@ class CustomerDetails extends Component {
         Name: this.documentData.Name,
         Phone_Number: this.documentData.Phone_Number,
         Pincode: this.documentData.Pincode,
+        Email:this.documentData.Email,
         Locality: this.documentData.Locality,
         Address: this.documentData.Address,
         city: this.documentData.city,
@@ -129,6 +134,7 @@ class CustomerDetails extends Component {
         Name: "",
         Phone_Number: "",
         Pincode: "",
+        Email:"",
         Locality: "",
         Address: "",
         city: "",
@@ -139,7 +145,7 @@ class CustomerDetails extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    this.setState({ divHide: true });
+    // this.setState({ divHide: true });
     const validateForm = errors => {
       let valid = false;
       if (
@@ -166,10 +172,6 @@ class CustomerDetails extends Component {
       }
     };
     if (validateForm(this.state.errors)) {
-      console.log(
-        "gone at error part ====================================================>"
-      );
-
       this.setState({ formfilled: !this.state.formfilled });
       this.setState({ buttonHide: !this.state.buttonHide });
       this.setState({ hidden: !this.state.hidden });
@@ -191,6 +193,8 @@ class CustomerDetails extends Component {
     //     Type: this.state.Type,
     //     Books: "abc"
     // };
+    console.log('div hide value--------------->');
+    
     this.props.checkout("abc");
     // new service().customerDetails(details).then(data => {
     //     this.props.history.push('/order', data.data.result.result._id);
@@ -208,7 +212,7 @@ class CustomerDetails extends Component {
         >
           <div
             className="divHide"
-            style={{ display: this.state.divHide ? "block" : "none" }}
+            style={{ display: this.state.divHide ? "true" : "false" }}
           >
             <div>
               <div className="cart-image">
@@ -439,7 +443,7 @@ class CustomerDetails extends Component {
             </div>
           </div>
         </div>
-        {/* {this.state.divHide == "false" ? ( */}
+        {this.state.divHide == true ? (
         <div>
           <div
             style={{
@@ -455,7 +459,7 @@ class CustomerDetails extends Component {
             {Books}
             <div
               
-              style={{ display: this.state.divHide ? "block" : "none" }}
+              style={{ display: this.state.divHide ? "true" : "false" }}
             >
               <Button
                 style={{
@@ -478,9 +482,11 @@ class CustomerDetails extends Component {
             </div>
           </div>
         </div>
-        {/* ) : ( */}
-        {/* <div></div> */}
-        {/* )} */}
+        ) : ( 
+         <div>
+             <div className="orderSummary">Order Summary</div>
+         </div> 
+         )} 
       </div>
     );
   }

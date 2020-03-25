@@ -12,6 +12,7 @@ import Footer from "../footer/footer";
 import orderImage from "../checkout/download (1).png";
 import "../checkout/checkout.css";
 import Navbar from '../topbar/navbar'
+
 class OrderPlaced extends Component {
   constructor(props) {
     super(props);
